@@ -19,6 +19,7 @@ import QrCodePage from "../pages/QrCodePage";
 import RegexPage from "../pages/RegexPage";
 import HistoryPage from "../pages/HistoryPage";
 import ProfilePage from "../pages/ProfilePage";
+import BillingPage from "../pages/BillingPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 import UsersPage from "../pages/admin/UsersPage";
 import RolesPage from "../pages/admin/RolesPage";
@@ -32,20 +33,12 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
-
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        <Route
-          element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tools/json" element={<JsonFormatterPage />} />
           <Route path="/tools/base64" element={<Base64Page />} />
@@ -59,69 +52,17 @@ export default function AppRoutes() {
           <Route path="/tools/regex" element={<RegexPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminDashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/analytics"
-            element={
-              <ProtectedRoute>
-                <AnalyticsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            
-            path="/admin/audit-logs"
-            element={
-              <ProtectedRoute>
-                <AuditLogsPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/billing" element={<BillingPage />} />
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
+          <Route path="/admin/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
+          <Route path="/admin/audit-logs" element={<ProtectedRoute><AuditLogsPage /></ProtectedRoute>} />
         </Route>
-        <Route
-          path="/admin/users"
-          element={
-            <ProtectedRoute>
-              <UsersPage />
-            </ProtectedRoute>
-          }
-        />
 
-        <Route
-          path="/admin/roles"
-          element={
-            <ProtectedRoute>
-              <RolesPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/admin/permissions"
-          element={
-            <ProtectedRoute>
-              <PermissionsPage />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path="/admin/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+        <Route path="/admin/roles" element={<ProtectedRoute><RolesPage /></ProtectedRoute>} />
+        <Route path="/admin/permissions" element={<ProtectedRoute><PermissionsPage /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route
-  path="/admin/settings"
-  element={
-    <ProtectedRoute>
-      <SettingsPage />
-    </ProtectedRoute>
-  }
-/>
       </Routes>
     </BrowserRouter>
   );
