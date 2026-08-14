@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import {
-  getHistory,
-  deleteHistory,
-  clearHistory,
-} from "../services/historyService";
+import { getHistory, deleteHistory, clearHistory } from "../services/historyService";
+import PageHeader from "../components/ui/Pageheader";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
+import { HistoryIcon, TrashIcon } from "../components/ui/Icons";
 
 export default function HistoryPage() {
   const [history, setHistory] = useState<any[]>([]);
@@ -14,7 +14,6 @@ export default function HistoryPage() {
   const loadHistory = async () => {
     try {
       const res = await getHistory();
-
       setHistory(res.data || []);
     } catch {
       toast.error("Failed to load history");
@@ -30,9 +29,7 @@ export default function HistoryPage() {
   const remove = async (id: string) => {
     try {
       await deleteHistory(id);
-
       toast.success("Deleted");
-
       loadHistory();
     } catch {
       toast.error("Delete failed");
@@ -44,9 +41,7 @@ export default function HistoryPage() {
 
     try {
       await clearHistory();
-
       toast.success("History cleared");
-
       loadHistory();
     } catch {
       toast.error("Clear failed");
@@ -54,61 +49,68 @@ export default function HistoryPage() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="space-y-4">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="h-16 animate-pulse rounded-xl border border-slate-200 bg-slate-100"
+          />
+        ))}
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-6">
-
-      <div className="flex items-center justify-between">
-
-        <h1 className="text-3xl font-bold">
-          Tool History
-        </h1>
-
-        <button
-          onClick={clear}
-          className="rounded bg-red-600 px-5 py-2 text-white"
-        >
-          Clear All
-        </button>
-
-      </div>
+    <div className="space-y-6 sm:space-y-8">
+      <PageHeader
+        eyebrow="Activity"
+        title="Tool History"
+        description="A record of the tools you've used recently."
+        icon={<HistoryIcon className="h-5 w-5 sm:h-6 sm:w-6" />}
+        action={
+          history.length > 0 ? (
+            <Button onClick={clear} variant="danger" icon={<TrashIcon className="h-4 w-4" />}>
+              Clear All
+            </Button>
+          ) : undefined
+        }
+      />
 
       {history.length === 0 ? (
-        <div className="rounded bg-white p-8 shadow text-center text-gray-500">
-          No history found.
-        </div>
+        <Card className="flex flex-col items-center gap-2 py-14 text-center">
+          <HistoryIcon className="h-8 w-8 text-slate-300" />
+          <p className="font-medium text-ink">No history yet</p>
+          <p className="text-sm text-slate-500">
+            Tools you use will show up here.
+          </p>
+        </Card>
       ) : (
-        <div className="space-y-4">
-
+        <div className="space-y-3">
           {history.map((item) => (
             <div
               key={item.id}
-              className="rounded-lg bg-white p-4 shadow flex justify-between items-center"
+              className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:p-5"
             >
-              <div>
-                <p className="font-semibold">
+              <div className="min-w-0">
+                <p className="truncate font-semibold text-ink">
                   {item.tool_name}
                 </p>
-
-                <p className="text-sm text-gray-500">
-                  {item.created_at}
-                </p>
+                <p className="text-sm text-slate-500">{item.created_at}</p>
               </div>
 
-              <button
+              <Button
                 onClick={() => remove(item.id)}
-                className="rounded bg-red-500 px-4 py-2 text-white"
+                variant="danger"
+                size="sm"
+                className="shrink-0"
               >
                 Delete
-              </button>
+              </Button>
             </div>
           ))}
-
         </div>
       )}
-
     </div>
   );
 }

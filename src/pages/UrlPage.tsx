@@ -1,10 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import {
-  encodeUrl,
-  decodeUrl,
-} from "../services/toolService";
+import { encodeUrl, decodeUrl } from "../services/toolService";
+import PageHeader from "../components/ui/Pageheader";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
+import OutputPanel from "../components/ui/Outputpanel";
+import { Textarea, Label } from "../components/ui/Field";
+import { LinkIcon } from "../components/ui/Icons";
 
 export default function UrlPage() {
   const [input, setInput] = useState("");
@@ -30,68 +33,46 @@ export default function UrlPage() {
     }
   };
 
-  const copy = async () => {
-    await navigator.clipboard.writeText(output);
-    toast.success("Copied");
-  };
-
   return (
-    <div className="space-y-6">
-
-      <h1 className="text-3xl font-bold">
-        URL Encoder / Decoder
-      </h1>
-
-      <textarea
-        rows={6}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="w-full rounded-lg border p-4"
-        placeholder="Enter URL or text..."
+    <div className="space-y-6 sm:space-y-8">
+      <PageHeader
+        eyebrow="Encoding"
+        title="URL Encoder / Decoder"
+        description="Percent-encode or decode URLs and query strings."
+        icon={<LinkIcon className="h-5 w-5 sm:h-6 sm:w-6" />}
       />
 
-      <div className="flex flex-wrap gap-3">
+      <Card>
+        <Label htmlFor="url-input">Input</Label>
+        <Textarea
+          id="url-input"
+          rows={6}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter URL or text..."
+        />
 
-        <button
-          onClick={handleEncode}
-          className="rounded bg-blue-600 px-5 py-2 text-white"
-        >
-          Encode
-        </button>
+        <div className="mt-4 flex flex-wrap gap-2.5">
+          <Button onClick={handleEncode} variant="primary">
+            Encode
+          </Button>
+          <Button onClick={handleDecode} variant="success">
+            Decode
+          </Button>
+          <Button
+            onClick={() => {
+              setInput("");
+              setOutput("");
+            }}
+            variant="danger"
+            className="sm:ml-auto"
+          >
+            Clear
+          </Button>
+        </div>
+      </Card>
 
-        <button
-          onClick={handleDecode}
-          className="rounded bg-green-600 px-5 py-2 text-white"
-        >
-          Decode
-        </button>
-
-        <button
-          onClick={copy}
-          className="rounded bg-gray-700 px-5 py-2 text-white"
-        >
-          Copy
-        </button>
-
-        <button
-          onClick={() => {
-            setInput("");
-            setOutput("");
-          }}
-          className="rounded bg-red-600 px-5 py-2 text-white"
-        >
-          Clear
-        </button>
-
-      </div>
-
-      <textarea
-        rows={6}
-        value={output}
-        readOnly
-        className="w-full rounded-lg border bg-slate-100 p-4"
-      />
-
+      <OutputPanel label="Output" value={output} placeholder="Encoded or decoded URL will appear here" />
     </div>
   );
 }

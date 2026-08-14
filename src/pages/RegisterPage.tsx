@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { register as registerUser } from "../services/authService";
+import { Input, Label, FieldError } from "../components/ui/Field";
+import Button from "../components/ui/Button";
 
 const registerSchema = z.object({
   first_name: z.string().min(2),
@@ -28,16 +30,13 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (
-    data: RegisterFormData
-  ) => {
+  const onSubmit = async (data: RegisterFormData) => {
     try {
       await registerUser(data);
 
       toast.success("Registration successful");
 
       navigate("/login");
-
     } catch (err) {
       console.error(err);
 
@@ -46,104 +45,99 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100">
+    <div className="flex min-h-screen items-center justify-center bg-bg px-4 py-10 sm:px-6">
+      <div className="w-full max-w-lg">
+        <div className="mb-6 flex flex-col items-center gap-2 text-center">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-700 font-mono text-lg font-bold text-white">
+            {"</>"}
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Create your account
+          </h1>
+          <p className="text-sm text-slate-500">
+            Free access to the full developer toolkit
+          </p>
+        </div>
 
-      <div className="w-full max-w-lg rounded-xl bg-white p-8 shadow-lg">
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-900/[0.03] sm:p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="first_name">First name</Label>
+                <Input
+                  id="first_name"
+                  {...register("first_name")}
+                  placeholder="Jane"
+                />
+                <FieldError>{errors.first_name?.message}</FieldError>
+              </div>
 
-        <h1 className="mb-6 text-center text-3xl font-bold">
-          Register
-        </h1>
+              <div>
+                <Label htmlFor="last_name">Last name</Label>
+                <Input
+                  id="last_name"
+                  {...register("last_name")}
+                  placeholder="Doe"
+                />
+                <FieldError>{errors.last_name?.message}</FieldError>
+              </div>
+            </div>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
-        >
+            <div>
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                {...register("username")}
+                placeholder="janedoe"
+              />
+              <FieldError>{errors.username?.message}</FieldError>
+            </div>
 
-          <input
-            {...register("first_name")}
-            placeholder="First Name"
-            className="w-full rounded border p-3"
-          />
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                {...register("email")}
+                placeholder="you@example.com"
+              />
+              <FieldError>{errors.email?.message}</FieldError>
+            </div>
 
-          {errors.first_name && (
-            <p className="text-red-500">
-              {errors.first_name.message}
-            </p>
-          )}
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                {...register("password")}
+                placeholder="••••••••"
+              />
+              <FieldError>{errors.password?.message}</FieldError>
+            </div>
 
-          <input
-            {...register("last_name")}
-            placeholder="Last Name"
-            className="w-full rounded border p-3"
-          />
+            <div>
+              <Label htmlFor="phone">Phone (optional)</Label>
+              <Input
+                id="phone"
+                {...register("phone")}
+                placeholder="+1 555 000 0000"
+              />
+              <FieldError>{errors.phone?.message}</FieldError>
+            </div>
 
-          <input
-            {...register("username")}
-            placeholder="Username"
-            className="w-full rounded border p-3"
-          />
+            <Button type="submit" disabled={isSubmitting} fullWidth size="lg" className="mt-2">
+              {isSubmitting ? "Creating account…" : "Create account"}
+            </Button>
+          </form>
+        </div>
 
-          {errors.username && (
-            <p className="text-red-500">
-              {errors.username.message}
-            </p>
-          )}
-
-          <input
-            {...register("email")}
-            placeholder="Email"
-            className="w-full rounded border p-3"
-          />
-
-          {errors.email && (
-            <p className="text-red-500">
-              {errors.email.message}
-            </p>
-          )}
-
-          <input
-            type="password"
-            {...register("password")}
-            placeholder="Password"
-            className="w-full rounded border p-3"
-          />
-
-          {errors.password && (
-            <p className="text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-
-          <input
-            {...register("phone")}
-            placeholder="Phone"
-            className="w-full rounded border p-3"
-          />
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded bg-green-600 p-3 text-white hover:bg-green-700"
-          >
-            {isSubmitting
-              ? "Creating..."
-              : "Create Account"}
-          </button>
-
-        </form>
-
-        <p className="mt-5 text-center">
+        <p className="mt-6 text-center text-sm text-slate-500">
           Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-blue-600"
-          >
+          <Link to="/login" className="font-semibold text-indigo-700 hover:text-indigo-800">
             Login
           </Link>
         </p>
-
       </div>
-
     </div>
   );
 }
