@@ -1,10 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  SparklesIcon,
-  RocketIcon,
-  UserGroupIcon,
-  CheckCircleIcon,
-} from "lucide-react";
+import { SparklesIcon, RocketIcon, UsersIcon, CheckCircleIcon } from "lucide-react";
 
 export function AboutSection() {
   const features = [
@@ -19,7 +14,7 @@ export function AboutSection() {
       description: "Optimized for speed and performance to get your work done instantly",
     },
     {
-      icon: UserGroupIcon,
+      icon: UsersIcon,
       title: "Developer Community",
       description: "Built by developers, for developers with features you actually need",
     },

@@ -1,0 +1,20 @@
+# DevTools Hub robots.txt
+# Allow search engines to crawl public tool pages and content
+# Block private pages (dashboard, admin, etc.)
+
+User-agent: *
+Allow: /
+Allow: /devtools/
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /billing
+Disallow: /profile
+Disallow: /history
+Disallow: /login
+Disallow: /register
+
+# XML Sitemap location
+Sitemap: https://devtoolshub.com/sitemap.xml
+
+# Crawl delay (optional, for heavy crawlers)
+Crawl-delay: 1

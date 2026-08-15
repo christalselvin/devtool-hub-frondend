@@ -134,7 +134,7 @@ export function ToolsSection() {
         >
           <p className="text-slate-600 mb-4">More tools coming soon...</p>
           <button
-            onClick={handleToolClick("/dashboard")}
+            onClick={() => handleToolClick("/dashboard")}
             className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
           >
             Explore All Tools

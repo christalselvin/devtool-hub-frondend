@@ -44,12 +44,24 @@ export default function LoginPage() {
       setToken(result.data.access_token);
 
       const profile = await getProfile();
+      const loggedInUser = profile.data;
 
-      setUser(profile.data);
+      setUser(loggedInUser);
+
+      const isAdminUser = !!(
+        loggedInUser.is_superuser ||
+        loggedInUser.is_admin ||
+        loggedInUser.role === "admin" ||
+        loggedInUser.role === "superadmin" ||
+        loggedInUser.role === "super_admin" ||
+        loggedInUser.roles?.includes("admin") ||
+        loggedInUser.roles?.includes("superadmin") ||
+        loggedInUser.roles?.includes("super_admin")
+      );
 
       toast.success("Login successful!");
 
-      navigate(redirectTo);
+      navigate(isAdminUser ? "/admin" : redirectTo);
     } catch (err) {
       console.error(err);
       toast.error("Invalid email or password");
