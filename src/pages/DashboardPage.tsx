@@ -1,7 +1,7 @@
 import StatsCard from "../components/dashboard/StatsCard";
 import QuickTools from "../components/dashboard/QuickTools";
 import RecentHistory from "../components/dashboard/RecentHistory";
-import PageHeader from "../components/ui/Pageheader";
+import PageHeader from "../components/ui/PageHeader";
 import { GridIcon } from "../components/ui/Icons";
 
 export default function DashboardPage() {

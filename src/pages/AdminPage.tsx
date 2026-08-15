@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import PageHeader from "../components/ui/Pageheader";
+import PageHeader from "../components/ui/PageHeader";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { ShieldIcon, TrashIcon } from "../components/ui/Icons";

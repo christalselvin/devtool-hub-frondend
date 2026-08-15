@@ -5,7 +5,7 @@ import { getProfile } from "../services/authService";
 import ProfileCard from "../components/profile/ProfileCard";
 import EditProfileForm from "../components/profile/EditProfileForm";
 import ChangePasswordForm from "../components/profile/ChangePasswordForm";
-import PageHeader from "../components/ui/Pageheader";
+import PageHeader from "../components/ui/PageHeader";
 import { UserIcon } from "../components/ui/Icons";
 
 export default function ProfilePage() {

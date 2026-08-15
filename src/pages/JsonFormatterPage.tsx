@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import { formatJson, minifyJson, validateJson } from "../services/toolService";
-import PageHeader from "../components/ui/Pageheader";
+import PageHeader from "../components/ui/PageHeader";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import OutputPanel from "../components/ui/Outputpanel";
