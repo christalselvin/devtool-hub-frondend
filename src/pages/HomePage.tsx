@@ -1,133 +1,195 @@
-import { Link, useNavigate } from "react-router-dom";
-import {
-  CodeIcon,
-  HashIcon,
-  BracesIcon,
-  KeyIcon,
-  QrIcon,
-  FingerprintIcon,
-  LockIcon,
-  RegexIcon,
-  ClockIcon,
-  LinkIcon,
-} from "../components/ui/Icons";
-import { useAuthStore } from "../store/authStore";
-
-// Adjust these paths to match your actual router config.
-const TOOLS = [
-  { icon: CodeIcon, label: "Base64 & URL", path: "/tools/base64" },
-  { icon: HashIcon, label: "Hashing", path: "/tools/hash" },
-  { icon: BracesIcon, label: "JSON Formatter", path: "/tools/json" },
-  { icon: KeyIcon, label: "JWT Decoder", path: "/tools/jwt" },
-  { icon: QrIcon, label: "QR Codes", path: "/tools/qr" },
-  { icon: FingerprintIcon, label: "UUID Generator", path: "/tools/uuid" },
-  { icon: LockIcon, label: "Password Generator", path: "/tools/password" },
-  { icon: RegexIcon, label: "Regex Tester", path: "/tools/regex" },
-  { icon: ClockIcon, label: "Timestamp Converter", path: "/tools/timestamp" },
-  { icon: LinkIcon, label: "URL Encoder", path: "/tools/url" },
-];
+import { useSEO, useStructuredData } from "../hooks/useSEO";
+import { HeroSection } from "../components/home/HeroSection";
+import { ToolsSection } from "../components/home/ToolsSection";
+import { AboutSection } from "../components/home/AboutSection";
+import { TestimonialsSection } from "../components/home/TestimonialsSection";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const token = useAuthStore((state) => state.token);
-  const isAuthenticated = !!token;
+  // SEO Configuration
+  useSEO({
+    title: "DevTools Hub v2 - Essential Developer Tools & Utilities",
+    description:
+      "DevTools Hub provides a comprehensive suite of essential developer tools including Base64 encoding, JWT decoding, JSON formatting, QR code generation, UUID generation, and more.",
+    keywords:
+      "developer tools, base64, jwt, json formatter, qr code, uuid, password generator, regex tester, timestamp converter",
+    author: "DevTools Hub",
+  });
 
-  const handleToolClick = (path: string) => {
-    if (isAuthenticated) {
-      navigate(path);
-    } else {
-      // Send to login, carrying the intended tool as a redirect target.
-      navigate(`/login?redirect=${encodeURIComponent(path)}`);
-    }
-  };
+  // JSON-LD Structured Data
+  useStructuredData({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "DevTools Hub",
+    description:
+      "A comprehensive suite of essential developer tools for encoding, decoding, and conversion",
+    url: "https://devtoolshub.com",
+    applicationCategory: "DeveloperApplication",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      ratingCount: "250",
+    },
+  });
 
   return (
-    <div className="min-h-screen bg-bg">
-      {/* Top bar */}
-      <header className="border-b border-slate-200/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-700 font-mono text-sm font-bold text-white">
-              {"</>"}
-            </div>
-            <span className="text-base font-bold tracking-tight text-ink">
-              DevTools Hub
-            </span>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link
-              to="/login"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-ink sm:px-4"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="rounded-lg bg-indigo-700 px-3 py-2 text-sm font-medium text-white shadow-sm shadow-indigo-900/10 transition-colors hover:bg-indigo-800 sm:px-4"
-            >
-              Get started
-            </Link>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <HeroSection />
 
-      {/* Hero */}
-      <main className="mx-auto max-w-6xl px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-mono text-xs font-medium text-indigo-700">
-            v1.0 — 10 tools, one toolkit
-          </span>
+      {/* Tools Section */}
+      <ToolsSection />
 
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Every dev tool you
-            <br className="hidden sm:block" /> reach for daily.
-          </h1>
+      {/* About Section */}
+      <div id="about-section">
+        <AboutSection />
+      </div>
 
-          <p className="mx-auto mt-5 max-w-lg text-base text-slate-500 sm:text-lg">
-            Encode, hash, decode, and generate — without twenty browser tabs
-            open. Fast, free, and built for the terminal-minded.
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* CTA Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="py-16 md:py-24 bg-gradient-to-r from-indigo-600 to-purple-600"
+      >
+        <div className="mx-auto max-w-4xl px-5 sm:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Supercharge Your Development Workflow?
+          </h2>
+          <p className="text-lg text-indigo-100 mb-8">
+            Join thousands of developers who use DevTools Hub daily to boost their
+            productivity and streamline their workflow.
           </p>
-
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to="/register"
-              className="w-full rounded-lg bg-indigo-700 px-6 py-3 text-center text-sm font-semibold text-white shadow-sm shadow-indigo-900/10 transition-colors hover:bg-indigo-800 sm:w-auto"
-            >
-              Create free account
-            </Link>
-            <Link
-              to="/login"
-              className="w-full rounded-lg border border-slate-200 bg-white px-6 py-3 text-center text-sm font-semibold text-ink transition-colors hover:bg-slate-50 sm:w-auto"
-            >
-              I already have one
-            </Link>
-          </div>
+          <button className="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:bg-slate-50 transition-colors shadow-lg">
+            Get Started Now →
+          </button>
         </div>
+      </motion.section>
 
-        {/* Tool grid — click routes straight in if logged in, otherwise via login */}
-        <div className="mt-16 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-          {TOOLS.map(({ icon: Icon, label, path }) => (
-            <button
-              key={label}
-              onClick={() => handleToolClick(path)}
-              className="group flex flex-col items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3 py-5 text-center shadow-sm shadow-slate-900/[0.02] transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-300 py-12">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Brand */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 transition-colors group-hover:bg-indigo-700 group-hover:text-white">
-                <Icon className="h-5 w-5" />
+              <h3 className="text-white font-bold text-lg mb-2">
+                DevTools Hub
+              </h3>
+              <p className="text-sm text-slate-400">
+                Essential tools for modern developers
+              </p>
+            </motion.div>
+
+            {/* Product */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <h4 className="text-white font-semibold mb-3">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Documentation
+                  </a>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Company */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h4 className="text-white font-semibold mb-3">Company</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Careers
+                  </a>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Legal */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <h4 className="text-white font-semibold mb-3">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Privacy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Bottom */}
+          <div className="border-t border-slate-700 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
+              <p>© 2024 DevTools Hub. All rights reserved.</p>
+              <div className="flex gap-6 mt-4 md:mt-0">
+                <a href="#" className="hover:text-white transition-colors">
+                  Twitter
+                </a>
+                <a href="#" className="hover:text-white transition-colors">
+                  GitHub
+                </a>
+                <a href="#" className="hover:text-white transition-colors">
+                  LinkedIn
+                </a>
               </div>
-              <span className="text-xs font-medium leading-snug text-slate-600">
-                {label}
-              </span>
-            </button>
-          ))}
+            </div>
+          </div>
         </div>
-
-        {!isAuthenticated && (
-          <p className="mt-8 text-center text-sm text-slate-400">
-            You'll be asked to log in the first time you open a tool.
-          </p>
-        )}
-      </main>
+      </footer>
     </div>
   );
 }
