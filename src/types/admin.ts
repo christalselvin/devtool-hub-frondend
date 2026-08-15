@@ -3,6 +3,12 @@ export interface DashboardStats {
   active_users: number;
   total_tools: number;
   total_history: number;
+  total_roles?: number;
+  total_permissions?: number;
+  active_subscriptions?: number;
+  monthly_revenue?: number;
+  api_requests?: number;
+  conversion_rate?: number;
 }
 
 export interface AdminUser {
