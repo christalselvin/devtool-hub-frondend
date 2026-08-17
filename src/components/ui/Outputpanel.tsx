@@ -29,28 +29,21 @@ export default function OutputPanel({
   return (
     <div
       className={[
-        "overflow-hidden rounded-xl border border-slate-800 bg-ink shadow-inner",
+        "overflow-hidden rounded-xl border border-slate-700 bg-slate-900 shadow-inner",
         minHeight,
       ].join(" ")}
     >
-      <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-2.5">
-        <div className="flex items-center gap-2">
-          <span className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-          </span>
-          <span className="ml-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-            {label}
-          </span>
-        </div>
+      <div className="flex items-center justify-between border-b border-slate-700 bg-slate-800/80 px-4 py-2.5">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">
+          {label}
+        </span>
         <div className="flex items-center gap-2">
           {action}
           {copyable && (
             <button
               onClick={copy}
               disabled={!value}
-              className="rounded-md px-2 py-1 text-xs font-medium text-slate-400 transition-colors hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-md px-2 py-1 text-xs font-medium text-slate-300 transition-colors hover:bg-slate-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               Copy
             </button>
@@ -68,7 +61,7 @@ export default function OutputPanel({
             {value}
           </pre>
         ) : (
-          <p className="font-mono text-sm text-slate-600">{placeholder}</p>
+          <p className="font-mono text-sm text-slate-400">{placeholder}</p>
         )}
       </div>
     </div>

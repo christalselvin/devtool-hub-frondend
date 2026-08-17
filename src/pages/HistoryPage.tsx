@@ -10,12 +10,17 @@ import { HistoryIcon, TrashIcon } from "../components/ui/Icons";
 export default function HistoryPage() {
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadHistory = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       const res = await getHistory();
       setHistory(res.data || []);
     } catch {
+      setError("Failed to load history");
       toast.error("Failed to load history");
     } finally {
       setLoading(false);
@@ -58,6 +63,18 @@ export default function HistoryPage() {
           />
         ))}
       </div>
+    );
+  }
+
+  if (error && history.length === 0) {
+    return (
+      <Card className="flex flex-col items-center gap-3 py-12 text-center">
+        <HistoryIcon className="h-8 w-8 text-slate-300" />
+        <p className="font-medium text-ink">{error}</p>
+        <Button onClick={() => void loadHistory()} variant="secondary">
+          Retry
+        </Button>
+      </Card>
     );
   }
 

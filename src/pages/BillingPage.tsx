@@ -18,8 +18,12 @@ export default function BillingPage() {
   const [newKey, setNewKey] = useState<string | null>(null);
   const [name, setName] = useState("My API key");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const load = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       const [billing, availablePlans, apiKeys] = await Promise.all([
         getBillingSummary(),
@@ -31,6 +35,7 @@ export default function BillingPage() {
       setKeys(apiKeys);
     } catch (error) {
       console.error(error);
+      setError("Unable to load billing information");
       toast.error("Unable to load billing information");
     } finally {
       setLoading(false);
@@ -65,6 +70,21 @@ export default function BillingPage() {
   };
 
   if (loading) return <div className="p-6">Loading billing...</div>;
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-xl rounded-2xl border border-red-200 bg-red-50 p-6 text-center shadow-sm">
+        <h2 className="text-xl font-bold text-red-700">Billing unavailable</h2>
+        <p className="mt-2 text-sm text-red-600">{error}</p>
+        <button
+          onClick={() => void load()}
+          className="mt-4 rounded-lg bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">

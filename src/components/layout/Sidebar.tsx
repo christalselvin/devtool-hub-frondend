@@ -60,7 +60,7 @@ export default function Sidebar() {
   return (
     <aside className="flex h-screen w-64 flex-col bg-slate-900 text-white">
       <div className="border-b border-slate-700 p-6">
-        <h1 className="text-2xl font-bold text-blue-400">🚀 DevTools Hub</h1>
+        <h1 className="text-2xl font-bold text-blue-400">DevTools Hub</h1>
         <p className="mt-1 text-sm text-slate-400">{isSuperAdmin ? "Admin Console" : "Developer Toolkit"}</p>
       </div>
 
