@@ -2,9 +2,9 @@ name: Frontend Build
 
 on:
   push:
-    branches: [main, monetization-ui]
+    branches: [main, dev, monetization-ui]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   build:
