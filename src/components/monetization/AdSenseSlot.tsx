@@ -1,21 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID as string | undefined;
 const slotId = import.meta.env.VITE_ADSENSE_SLOT_ID as string | undefined;
 
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
 export default function AdSenseSlot() {
+  const adRef = useRef<HTMLModElement | null>(null);
+
   useEffect(() => {
     if (!clientId || !slotId) return;
 
     const existing = document.querySelector('script[data-devtoolshub-adsense="true"]');
-    if (existing) return;
+    if (!existing) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+      script.crossOrigin = "anonymous";
+      script.dataset.devtoolshubAdsense = "true";
+      document.head.appendChild(script);
+    }
 
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
-    script.crossOrigin = "anonymous";
-    script.dataset.devtoolshubAdsense = "true";
-    document.head.appendChild(script);
+    const timer = window.setTimeout(() => {
+      try {
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({});
+      } catch {
+        // AdSense can be unavailable during local development or before approval.
+      }
+    }, 250);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   if (!clientId || !slotId) return null;
@@ -26,6 +45,7 @@ export default function AdSenseSlot() {
         Advertisement
       </p>
       <ins
+        ref={adRef}
         className="adsbygoogle block"
         style={{ display: "block", minHeight: 60 }}
         data-ad-client={clientId}
