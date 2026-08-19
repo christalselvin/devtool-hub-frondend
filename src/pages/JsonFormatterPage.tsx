@@ -16,9 +16,10 @@ export default function JsonFormatterPage() {
   const handleFormat = async () => {
     try {
       const res = await formatJson(input);
-      setOutput(res.data);
-      toast.success("Formatted successfully");
+      setOutput(res?.data?.formatted ?? "");
+      toast.success("JSON formatted successfully");
     } catch {
+      setOutput("");
       toast.error("Invalid JSON");
     }
   };
@@ -26,18 +27,22 @@ export default function JsonFormatterPage() {
   const handleMinify = async () => {
     try {
       const res = await minifyJson(input);
-      setOutput(res.data);
-      toast.success("Minified");
+      setOutput(res?.data?.minified ?? "");
+      toast.success("JSON minified successfully");
     } catch {
+      setOutput("");
       toast.error("Invalid JSON");
     }
   };
 
   const handleValidate = async () => {
     try {
-      await validateJson(input);
-      toast.success("Valid JSON");
+      const res = await validateJson(input);
+      const isValid = res?.data?.valid === true;
+      setOutput(isValid ? "Valid JSON ✓" : "Invalid JSON");
+      toast.success(isValid ? "Valid JSON" : "Invalid JSON");
     } catch {
+      setOutput("Invalid JSON");
       toast.error("Invalid JSON");
     }
   };
@@ -85,11 +90,11 @@ export default function JsonFormatterPage() {
       </Card>
 
       <OutputPanel
-        label="Output"
+        label="JSON Output"
         value={output}
-        minHeight="min-h-[220px]"
+        minHeight="min-h-[260px]"
         wrap={false}
-        placeholder="Formatted JSON will appear here"
+        placeholder="Run Format or Minify to generate output"
       />
     </div>
   );
