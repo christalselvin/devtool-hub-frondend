@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://devtool-hub-frondend.onrender.com/</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/json</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/base64</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/jwt</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/uuid</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/password</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/hash</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/url</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/timestamp</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/qr</loc></url>
+  <url><loc>https://devtool-hub-frondend.onrender.com/tools/regex</loc></url>
+</urlset>
