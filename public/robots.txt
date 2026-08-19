@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /history
+Disallow: /profile
+Disallow: /billing
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://devtool-hub-frondend.onrender.com/sitemap.xml
