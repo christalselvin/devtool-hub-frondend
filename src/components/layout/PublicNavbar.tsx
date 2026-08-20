@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Menu, Search, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NAV_ITEMS = [
   { label: "Tools", path: "/tools" },
@@ -50,138 +50,173 @@ const SOCIALS = [
 export default function PublicNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    function handleClickOutside(event: MouseEvent) {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setMobileOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
-      <div className="mx-auto flex min-h-[72px] w-full max-w-[1440px] items-center gap-5 px-4 sm:px-6 lg:px-8">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl"
+    >
+      <div className="relative mx-auto flex min-h-[72px] w-full max-w-[1440px] items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:gap-2 lg:px-8 xl:gap-4">
+        {/* Logo — single image, pinned left */}
         <Link
           to="/"
           onClick={() => setMobileOpen(false)}
-          className="group flex shrink-0 items-center gap-2.5"
+          className="flex shrink-0 items-center pr-14 lg:pr-0"
           aria-label="DevTools Hub home"
         >
-          <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-orange-500 text-white shadow-[0_6px_18px_rgba(249,115,22,0.22)] transition-transform duration-200 group-hover:scale-105">
-            {!logoError ? (
-              <img
-                src="/logo.svg"
-                alt="DevTools Hub logo"
-                className="h-full w-full object-contain"
-                onError={() => setLogoError(true)}
-              />
-            ) : (
-              <span className="font-mono text-xs font-black">&lt;/&gt;</span>
-            )}
-          </span>
-          <span className="whitespace-nowrap text-[18px] font-extrabold tracking-[-0.025em] text-slate-950 sm:text-[20px]">
-            Dev<span className="text-orange-500">Tools</span>Hub
-          </span>
+          {!logoError ? (
+            <img
+              src="/logo.svg"
+              alt="DevTools Hub"
+              className="h-9 w-auto sm:h-10"
+              onError={() => setLogoError(true)}
+            />
+          ) : (
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 font-mono text-xs font-black text-white">
+              &lt;/&gt;
+            </span>
+          )}
         </Link>
 
-        <nav className="mx-auto hidden items-center gap-1 md:flex" aria-label="Main navigation">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className="rounded-lg px-4 py-2.5 text-sm font-semibold text-slate-800 transition-colors duration-200 hover:bg-orange-50 hover:text-orange-600"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Nav links + socials + search + auth — one group, centered in the space after the logo */}
+        <div className="hidden flex-1 items-center justify-center gap-1 pl-6 lg:flex lg:pl-10 xl:gap-2 xl:pl-16">
+          <nav className="flex h-11 items-center gap-1" aria-label="Main navigation">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="flex h-full items-center rounded-lg px-3 text-sm font-semibold text-slate-800 hover:bg-orange-50 hover:text-orange-600 xl:px-4"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-        <div className="ml-auto hidden items-center gap-1.5 md:flex">
-          {SOCIALS.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={social.label}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
-            >
-              {social.icon}
-            </a>
-          ))}
+          <span className="mx-2 h-7 w-px bg-slate-200" aria-hidden="true" />
+
+          <div className="flex h-11 items-center gap-1.5">
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 hover:bg-orange-50 hover:text-orange-600"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
 
           <span className="mx-2 h-7 w-px bg-slate-200" aria-hidden="true" />
 
           <button
             type="button"
             aria-label="Search"
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition-all duration-200 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15"
+            className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15"
           >
             <Search size={19} />
           </button>
 
           <Link
             to="/login"
-            className="ml-1 rounded-lg px-3.5 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50 hover:text-orange-600"
+            className="ml-1 flex h-11 items-center rounded-lg px-3.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 hover:text-orange-600"
           >
             Login
           </Link>
 
           <Link
             to="/register"
-            className="inline-flex h-10 items-center justify-center rounded-lg bg-orange-500 px-5 text-sm font-bold text-white shadow-[0_5px_14px_rgba(249,115,22,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-[0_8px_18px_rgba(249,115,22,0.26)] focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/20"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-xl bg-orange-500 px-6 text-sm font-bold text-white shadow-[0_5px_14px_rgba(249,115,22,0.2)] hover:bg-orange-600 hover:shadow-[0_8px_18px_rgba(249,115,22,0.26)] focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/20"
           >
             Get started
           </Link>
         </div>
 
+        {/* Mobile / tablet toggle — pinned to the exact top-right corner */}
         <button
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((value) => !value)}
-          className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition-colors hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 md:hidden"
+          className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 sm:right-6 sm:h-11 sm:w-11 lg:hidden"
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileOpen ? <X size={20} className="sm:h-[22px] sm:w-[22px]" /> : <Menu size={20} className="sm:h-[22px] sm:w-[22px]" />}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-slate-200 bg-white md:hidden">
-          <nav className="mx-auto flex max-w-[1440px] flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Mobile navigation">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-3 text-sm font-semibold text-slate-800 hover:bg-orange-50 hover:text-orange-600"
-              >
-                {item.label}
-              </Link>
-            ))}
-
-            <div className="mt-2 flex items-center gap-2 border-t border-slate-100 pt-4">
-              {SOCIALS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600"
+        <div className="border-t border-slate-200 bg-white lg:hidden">
+          <nav
+            className="mx-auto flex max-w-[640px] flex-col px-5 py-6 sm:px-8 sm:py-7 md:max-w-[720px]"
+            aria-label="Mobile navigation"
+          >
+            <div className="flex flex-col gap-0.5">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl px-4 py-3.5 text-base font-semibold text-slate-800 hover:bg-orange-50 hover:text-orange-600"
                 >
-                  {social.icon}
-                </a>
+                  {item.label}
+                </Link>
               ))}
             </div>
 
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <Link
-                to="/login"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 text-sm font-semibold text-slate-800 hover:border-orange-300 hover:bg-orange-50"
-              >
-                Login
-              </Link>
+            <div className="my-6 border-t border-slate-100" aria-hidden="true" />
+
+            <div>
+              <p className="mb-3 px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                Follow us
+              </p>
+              <div className="flex items-center gap-2.5">
+                {SOCIALS.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="my-6 border-t border-slate-100" aria-hidden="true" />
+
+            <div className="flex flex-col gap-3">
               <Link
                 to="/register"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-orange-500 text-sm font-bold text-white hover:bg-orange-600"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-orange-500 text-sm font-bold text-white hover:bg-orange-600"
               >
                 Get started
+              </Link>
+              <Link
+                to="/login"
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl border border-slate-200 text-sm font-semibold text-slate-800 hover:border-orange-300 hover:bg-orange-50"
+              >
+                Login
               </Link>
             </div>
           </nav>
