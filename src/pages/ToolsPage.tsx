@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/seo/Seo";
-import PublicNavbar from "../components/layout/PublicNavbar";
+import PublicNavbar from "../components/layout/Navbar";
 import { homeTools } from "../data/homeTools";
 
 export default function ToolsPage() {
