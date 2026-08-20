@@ -49,6 +49,7 @@ const SOCIALS = [
 
 export default function PublicNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
@@ -59,9 +60,17 @@ export default function PublicNavbar() {
           className="group flex shrink-0 items-center gap-2.5"
           aria-label="DevTools Hub home"
         >
-          <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-orange-500 text-white shadow-[0_6px_18px_rgba(249,115,22,0.22)] transition-transform duration-200 group-hover:scale-105">
-            <img src="/logo.svg" alt="" className="h-full w-full object-contain" />
-            <span className="absolute font-mono text-xs font-black">&lt;/&gt;</span>
+          <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-orange-500 text-white shadow-[0_6px_18px_rgba(249,115,22,0.22)] transition-transform duration-200 group-hover:scale-105">
+            {!logoError ? (
+              <img
+                src="/logo.svg"
+                alt="DevTools Hub logo"
+                className="h-full w-full object-contain"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <span className="font-mono text-xs font-black">&lt;/&gt;</span>
+            )}
           </span>
           <span className="whitespace-nowrap text-[18px] font-extrabold tracking-[-0.025em] text-slate-950 sm:text-[20px]">
             Dev<span className="text-orange-500">Tools</span>Hub
