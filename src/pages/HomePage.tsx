@@ -29,76 +29,123 @@ const TOOLS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-white text-slate-950">
       <Seo path="/" />
 
-      <header className="border-b border-slate-200/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-700 font-mono text-sm font-bold text-white">
+      <header className="border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+          <Link to="/" className="group flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 font-mono text-sm font-bold text-white shadow-sm transition-transform group-hover:-translate-y-0.5">
               {"</>"}
-            </div>
-            <span className="text-base font-bold tracking-tight text-ink">DevTools Hub</span>
+            </span>
+            <span className="text-lg font-extrabold tracking-tight text-slate-950">
+              Dev<span className="text-orange-500">Tools</span> Hub
+            </span>
           </Link>
+
+          <nav className="hidden items-center gap-8 md:flex">
+            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/tools">
+              Tools
+            </Link>
+            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/categories">
+              Categories
+            </Link>
+            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/about">
+              About
+            </Link>
+          </nav>
+
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link to="/login" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">
+            <Link
+              to="/login"
+              className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-orange-50 hover:text-orange-600"
+            >
               Login
             </Link>
-            <Link to="/register" className="rounded-lg bg-indigo-700 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-800 sm:px-4">
+            <Link
+              to="/register"
+              className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-orange-500/15"
+            >
               Get started
             </Link>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-mono text-xs font-medium text-indigo-700">
-            Free developer toolkit
-          </span>
+      <main className="mx-auto max-w-6xl px-5 pb-20 pt-14 sm:px-8 sm:pt-20">
+        <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-5 py-14 text-center shadow-sm sm:px-10 lg:py-20">
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-200/50 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-orange-100/60 blur-3xl" />
 
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Every dev tool you
-            <br className="hidden sm:block" /> reach for daily.
-          </h1>
+          <div className="relative mx-auto max-w-3xl">
+            <span className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 font-mono text-xs font-semibold text-orange-700">
+              Free developer toolkit
+            </span>
 
-          <p className="mx-auto mt-5 max-w-lg text-base text-slate-500 sm:text-lg">
-            Format, encode, hash, decode, test, and generate — fast, free, and built for everyday engineering work.
-          </p>
+            <h1 className="mt-6 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              Every dev tool you reach for,
+              <span className="block text-orange-500">in one place.</span>
+            </h1>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to="/tools/json" className="w-full rounded-lg bg-indigo-700 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 sm:w-auto">
-              Try a tool free
-            </Link>
-            <Link to="/register" className="w-full rounded-lg border border-slate-200 bg-white px-6 py-3 text-center text-sm font-semibold text-ink hover:bg-slate-50 sm:w-auto">
-              Create free account
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              Format, encode, hash, decode, test, and generate — fast, free, and built for everyday engineering work.
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                to="/tools/json"
+                className="w-full rounded-lg bg-orange-500 px-6 py-3 text-center text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 hover:shadow-md sm:w-auto"
+              >
+                Try a tool free
+              </Link>
+              <Link
+                to="/register"
+                className="w-full rounded-lg border border-slate-300 bg-white px-6 py-3 text-center text-sm font-bold text-slate-900 transition-all hover:border-orange-300 hover:bg-orange-50 sm:w-auto"
+              >
+                Create free account
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Developer tools" className="mt-12">
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-orange-500">Popular tools</p>
+              <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">Tools developers use every day</h2>
+            </div>
+            <Link className="hidden text-sm font-bold text-orange-600 hover:text-orange-700 sm:block" to="/tools">
+              View all →
             </Link>
           </div>
-        </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-          {TOOLS.map(({ icon: Icon, label, path }) => (
-            <Link
-              key={label}
-              to={path}
-              className="group flex flex-col items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3 py-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 group-hover:bg-indigo-700 group-hover:text-white">
-                <Icon className="h-5 w-5" />
-              </div>
-              <span className="text-xs font-medium leading-snug text-slate-600">{label}</span>
-            </Link>
-          ))}
-        </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+            {TOOLS.map(({ icon: Icon, label, path }) => (
+              <Link
+                key={label}
+                to={path}
+                className="group flex min-h-32 flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-orange-200 hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50 text-orange-500 transition-colors group-hover:bg-orange-500 group-hover:text-white">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="text-sm font-bold leading-snug text-slate-700 group-hover:text-slate-950">{label}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         <AdSenseSlot />
 
-        <section className="mx-auto mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 text-center sm:p-8">
-          <h2 className="text-2xl font-bold text-ink">Free tools now. More power when you need it.</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-500">
+        <section className="mx-auto mt-12 max-w-3xl rounded-2xl border border-orange-100 bg-orange-50 p-7 text-center sm:p-9">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">Free tools now. More power when you need it.</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
             Save your tool history and prepare for developer API access with a free DevTools Hub account.
           </p>
-          <Link to="/register" className="mt-5 inline-flex rounded-lg bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-800">
+          <Link
+            to="/register"
+            className="mt-5 inline-flex rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 hover:shadow-md"
+          >
             Create your free account
           </Link>
         </section>
