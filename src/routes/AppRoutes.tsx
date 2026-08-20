@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
+import ToolsPage from "../pages/ToolsPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import DashboardPage from "../pages/DashboardPage";
@@ -34,13 +35,13 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/tools" element={<ToolsPage />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* Public tool pages are crawlable and usable before account creation. */}
         <Route element={<PublicToolLayout />}>
           <Route path="/tools/json" element={<JsonFormatterPage />} />
           <Route path="/tools/base64" element={<Base64Page />} />

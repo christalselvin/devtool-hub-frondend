@@ -13,21 +13,42 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-indigo-700 text-white hover:bg-indigo-800 active:bg-indigo-900 shadow-sm shadow-indigo-900/10",
+    "bg-orange-500 text-white shadow-sm shadow-orange-500/20 hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/25 active:bg-orange-700",
   secondary:
-    "bg-white text-ink border border-slate-200 hover:bg-slate-50 active:bg-slate-100",
+    "border border-slate-200 bg-white text-slate-900 shadow-sm hover:border-orange-200 hover:bg-orange-50 hover:text-orange-700 active:bg-orange-100",
   success:
-    "bg-teal-700 text-white hover:bg-teal-800 active:bg-teal-900 shadow-sm shadow-teal-900/10",
+    "bg-emerald-600 text-white shadow-sm shadow-emerald-600/20 hover:bg-emerald-700 hover:shadow-md active:bg-emerald-800",
   danger:
-    "bg-white text-red-600 border border-red-200 hover:bg-red-50 active:bg-red-100",
+    "border border-red-200 bg-white text-red-600 shadow-sm hover:bg-red-50 active:bg-red-100",
   ghost:
-    "bg-transparent text-slate-500 hover:bg-slate-100 hover:text-ink",
+    "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950 active:bg-slate-200",
 };
 
+// Responsive sizing: base = small mobile, sm: = larger phones, md: = tablets,
+// lg: = laptops, xl: = large monitors. Fixed heights (not min-h) keep every
+// button on the same baseline as other UI next to it. All values use the
+// default Tailwind spacing scale — no silently-dropped classes.
 const sizeClasses: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-xs gap-1.5",
-  md: "px-4 py-2.5 text-sm gap-2",
-  lg: "px-5 py-3 text-sm gap-2",
+  sm: [
+    "h-8 px-3 text-[11px] gap-1.5 rounded-lg",
+    "sm:h-9 sm:px-3.5 sm:text-xs",
+    "md:h-9 md:px-4 md:text-xs",
+    "lg:h-9 lg:px-4 lg:text-sm",
+  ].join(" "),
+  md: [
+    "h-9 px-3.5 text-xs gap-1.5 rounded-lg",
+    "sm:h-10 sm:px-4 sm:text-sm sm:gap-2",
+    "md:h-10 md:px-5 md:text-sm",
+    "lg:h-11 lg:px-5 lg:text-sm",
+    "xl:h-11 xl:px-5 xl:text-base",
+  ].join(" "),
+  lg: [
+    "h-10 px-4 text-sm gap-1.5 rounded-lg",
+    "sm:h-11 sm:px-5 sm:text-sm sm:gap-2 sm:rounded-xl",
+    "md:h-12 md:px-6 md:text-base",
+    "lg:h-12 lg:px-6 lg:text-base",
+    "xl:h-[3.25rem] xl:px-7 xl:text-lg",
+  ].join(" "),
 };
 
 export default function Button({
@@ -42,21 +63,28 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
+      type={props.type ?? "button"}
       disabled={disabled}
       className={[
-        "inline-flex items-center justify-center rounded-lg font-medium",
-        "transition-colors duration-150",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
-        "disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex min-w-0 items-center justify-center",
+        "whitespace-nowrap align-middle",
+        "font-semibold leading-none tracking-[-0.01em]",
+        "select-none touch-manipulation",
+        "focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/20 focus-visible:ring-offset-2",
+        "disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
         variantClasses[variant],
         sizeClasses[size],
-        fullWidth ? "w-full" : "",
+        fullWidth ? "w-full" : "w-full sm:w-auto max-w-full",
         className,
       ].join(" ")}
       {...props}
     >
-      {icon}
-      {children}
+      {icon && (
+        <span className="shrink-0 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-[18px] sm:[&>svg]:w-[18px]" aria-hidden="true">
+          {icon}
+        </span>
+      )}
+      <span className="min-w-0 truncate">{children}</span>
     </button>
   );
 }
