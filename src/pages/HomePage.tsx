@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import {
   CodeIcon,
   HashIcon,
@@ -27,37 +29,122 @@ const TOOLS = [
   { icon: LinkIcon, label: "URL Encoder", path: "/tools/url" },
 ];
 
+const NAV_ITEMS = [
+  { label: "Tools", path: "/tools" },
+  { label: "Categories", path: "/categories" },
+  { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
+];
+
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white text-slate-950">
       <Seo path="/" />
 
-      <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
-          <Link to="/" className="group flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 font-mono text-sm font-bold text-white shadow-sm transition-transform group-hover:-translate-y-0.5">
-              {"</>"}
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center px-5 sm:px-8 lg:px-10">
+          {/* Brand */}
+          <Link
+            to="/"
+            className="group flex shrink-0 items-center gap-3"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="DevTools Hub home"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-orange-500 shadow-[0_6px_18px_rgba(249,115,22,0.22)] transition-transform duration-200 group-hover:-translate-y-0.5">
+              <img
+                src="/logo.svg"
+                alt=""
+                className="h-full w-full object-contain"
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                }}
+              />
+              <span className="font-mono text-sm font-black text-white">&lt;/&gt;</span>
             </span>
-            <span className="text-lg font-extrabold tracking-tight text-slate-950 sm:text-xl">
-              Dev<span className="text-orange-500">Tools</span> Hub
+
+            <span className="text-[18px] font-extrabold tracking-[-0.02em] text-slate-950 sm:text-xl">
+              Dev<span className="text-orange-500">Tools</span>Hub
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex">
-            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/tools">Tools</Link>
-            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/categories">Categories</Link>
-            <Link className="text-sm font-semibold text-slate-700 transition-colors hover:text-orange-500" to="/about">About</Link>
+          {/* Desktop navigation */}
+          <nav className="mx-auto hidden items-center gap-1 md:flex" aria-label="Main navigation">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="relative rounded-lg px-4 py-2.5 text-[14px] font-semibold text-slate-700 transition-colors duration-200 hover:bg-orange-50 hover:text-orange-600"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link to="/login" className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-orange-50 hover:text-orange-600">
+          {/* Desktop actions */}
+          <div className="hidden shrink-0 items-center gap-2 md:flex">
+            <Link
+              to="/login"
+              className="inline-flex h-10 items-center justify-center rounded-lg px-4 text-[14px] font-semibold text-slate-700 transition-colors duration-200 hover:bg-slate-50 hover:text-slate-950"
+            >
               Login
             </Link>
-            <Link to="/register" className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-orange-500/15">
+
+            <Link
+              to="/register"
+              className="inline-flex h-10 items-center justify-center rounded-lg bg-orange-500 px-5 text-[14px] font-bold text-white shadow-[0_5px_14px_rgba(249,115,22,0.22)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-[0_8px_18px_rgba(249,115,22,0.28)] focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/20"
+            >
               Get started
             </Link>
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen((value) => !value)}
+            className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition-colors hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15 md:hidden"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
+
+        {/* Mobile navigation */}
+        {mobileMenuOpen && (
+          <div className="border-t border-slate-200 bg-white md:hidden">
+            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4 sm:px-8" aria-label="Mobile navigation">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-600"
+                >
+                  {item.label}
+                </Link>
+              ))}
+
+              <div className="mt-2 grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-200 text-sm font-semibold text-slate-800 hover:border-orange-300 hover:bg-orange-50"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex h-11 items-center justify-center rounded-lg bg-orange-500 px-4 text-sm font-bold text-white shadow-sm hover:bg-orange-600"
+                >
+                  Get started
+                </Link>
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       <main>
