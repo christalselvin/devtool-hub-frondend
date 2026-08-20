@@ -39,40 +39,40 @@ export default function HomePage() {
           <div className="pointer-events-none absolute left-[-12rem] top-20 h-80 w-80 rounded-full bg-orange-100/70 blur-3xl" />
           <div className="pointer-events-none absolute right-[-10rem] top-[-5rem] h-96 w-96 rounded-full bg-orange-50 blur-3xl" />
 
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-14 sm:px-8 sm:py-18 lg:grid-cols-[1fr_0.9fr] lg:gap-20 lg:px-10 lg:py-20">
-            <div className="max-w-2xl">
+          <div className="relative mx-auto grid w-full max-w-[1280px] items-center gap-12 px-6 py-14 sm:px-8 sm:py-16 lg:min-h-[500px] lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
+            <div className="min-w-0 max-w-2xl">
               <span className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3.5 py-1.5 font-mono text-xs font-semibold text-orange-700">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                 Free developer toolkit
               </span>
 
-              <h1 className="mt-6 text-5xl font-black leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-[4.7rem]">
+              <h1 className="mt-6 max-w-[680px] text-5xl font-black leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-[72px]">
                 Build faster.
                 <br />
                 <span className="text-orange-500">Ship smarter.</span>
               </h1>
 
-              <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Simple, fast developer utilities for formatting, encoding, hashing, decoding, testing, and everyday engineering work.
+              <p className="mt-6 max-w-[600px] text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+                Simple, fast developer utilities for formatting, encoding, hashing,
+                decoding, testing, and everyday engineering work.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   to="/tools/json"
-                  className="inline-flex min-h-12 items-center justify-center rounded-xl bg-orange-500 px-6 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25"
+                  className="inline-flex h-12 items-center justify-center rounded-xl bg-orange-500 px-6 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition-all hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/25"
                 >
-                  Explore tools
-                  <span className="ml-2 text-base">→</span>
+                  Explore tools <span className="ml-2">→</span>
                 </Link>
                 <Link
                   to="/register"
-                  className="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 text-sm font-bold text-slate-900 transition-all duration-200 hover:border-orange-300 hover:bg-orange-50"
+                  className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 text-sm font-bold text-slate-900 transition-all hover:border-orange-300 hover:bg-orange-50"
                 >
                   Create free account
                 </Link>
               </div>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-500 sm:text-sm">
+              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
                 <span className="font-bold text-slate-800">10+ free tools</span>
                 <span className="h-1 w-1 rounded-full bg-slate-300" />
                 <span>No setup</span>
@@ -81,16 +81,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-lg lg:ml-auto">
-              <div className="absolute -inset-5 rounded-[2rem] bg-orange-100/70 blur-2xl" />
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-950 shadow-2xl shadow-slate-900/15">
-                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                  <div className="flex items-center gap-2">
+            <div className="relative w-full lg:pl-2">
+              <div className="absolute -inset-5 rounded-[32px] bg-orange-100/70 blur-2xl" />
+              <div className="relative mx-auto w-full max-w-[560px] overflow-hidden rounded-[24px] border border-slate-200 bg-slate-950 shadow-2xl shadow-slate-900/20">
+                <div className="flex h-12 items-center justify-between border-b border-white/10 px-5">
+                  <div className="flex gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
                     <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
                     <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
                   </div>
-                  <span className="rounded-md bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-400">developer-tools</span>
+                  <span className="font-mono text-[11px] text-slate-500">developer-tools</span>
                 </div>
 
                 <div className="p-5 sm:p-6">
@@ -102,7 +102,7 @@ export default function HomePage() {
                     <span className="rounded-lg bg-orange-500/10 px-2.5 py-1 text-xs font-bold text-orange-300">Valid ✓</span>
                   </div>
 
-                  <div className="rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-xs leading-7 sm:text-sm">
+                  <div className="rounded-2xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-7">
                     <div className="text-orange-400">&#123;</div>
                     <div className="pl-4"><span className="text-slate-400">"name"</span><span className="text-slate-600">: </span><span className="text-emerald-400">"DevTools Hub"</span><span className="text-slate-500">,</span></div>
                     <div className="pl-4"><span className="text-slate-400">"fast"</span><span className="text-slate-600">: </span><span className="text-orange-300">true</span><span className="text-slate-500">,</span></div>
@@ -130,7 +130,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section aria-label="Developer tools" className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-10 lg:py-18">
+        <section aria-label="Developer tools" className="mx-auto w-full max-w-[1280px] px-6 py-14 sm:px-8 lg:px-10 lg:py-18">
           <div className="mb-7 flex items-end justify-between gap-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-500">Popular tools</p>
@@ -140,12 +140,12 @@ export default function HomePage() {
             <Link className="hidden rounded-lg px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-orange-50 hover:text-orange-600 sm:block" to="/tools">View all →</Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {TOOLS.map(({ icon: Icon, label, path }) => (
               <Link
                 key={label}
                 to={path}
-                className="group flex min-h-[150px] flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)] focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15"
+                className="group flex min-h-[150px] flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-orange-200 hover:shadow-xl hover:shadow-slate-900/5 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-500/15"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50 text-orange-500 transition-all duration-200 group-hover:bg-orange-500 group-hover:text-white">
                   <Icon className="h-5 w-5" />
@@ -159,7 +159,7 @@ export default function HomePage() {
 
         <AdSenseSlot />
 
-        <section className="mx-auto mb-16 max-w-7xl px-5 sm:px-8 lg:px-10">
+        <section className="mx-auto mb-16 w-full max-w-[1280px] px-6 sm:px-8 lg:px-10">
           <div className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-12 text-center sm:px-10">
             <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-orange-500/20 blur-3xl" />
             <div className="pointer-events-none absolute -left-20 -bottom-24 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl" />
