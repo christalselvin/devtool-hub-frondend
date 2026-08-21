@@ -1,15 +1,6 @@
+import { ArrowRight, History } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export default function RecentHistory() {
-  return (
-    <div className="rounded-xl bg-white p-6 shadow">
-
-      <h2 className="mb-4 text-xl font-bold">
-        Recent History
-      </h2>
-
-      <p className="text-gray-500">
-        No tool usage yet.
-      </p>
-
-    </div>
-  );
+  return <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7"><div className="flex items-center justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-500">Activity</p><h2 className="mt-1 text-xl font-black tracking-tight text-slate-950">Recent history</h2></div><Link to="/history" className="inline-flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-orange-600">View history <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-5 flex min-h-[150px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-5 text-center"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm"><History className="h-5 w-5" /></span><p className="mt-3 text-sm font-bold text-slate-700">No activity yet</p><p className="mt-1 max-w-md text-xs leading-5 text-slate-400">Your recent tool activity will appear here once you start using DevTools Hub.</p><Link to="/tools" className="mt-3 text-xs font-bold text-orange-500 hover:text-orange-600">Explore developer tools →</Link></div></section>;
 }
