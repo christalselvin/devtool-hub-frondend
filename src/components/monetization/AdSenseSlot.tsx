@@ -37,7 +37,17 @@ export default function AdSenseSlot() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  if (!clientId || !slotId) return null;
+  if (!clientId || !slotId) {
+    if (import.meta.env.DEV) {
+      return (
+        <div className="mx-auto my-8 flex min-h-[90px] max-w-[1280px] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-xs text-slate-500">
+          Advertisement
+        </div>
+      );
+    }
+
+    return null;
+  }
 
   return (
     <div className="my-8 min-h-[90px] overflow-hidden rounded-xl border border-slate-200 bg-white p-3">

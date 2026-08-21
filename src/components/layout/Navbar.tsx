@@ -5,9 +5,9 @@ import Button from "../ui/Button";
 
 const NAV_ITEMS = [
   { label: "Tools", path: "/tools" },
-  { label: "Categories", path: "/categories" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+  { label: "Categories", path: "/tools" },
+  { label: "About", path: "/tools" },
+  { label: "Contact", path: "/tools" },
 ];
 
 const SOCIALS = [

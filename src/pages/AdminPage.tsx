@@ -63,7 +63,7 @@ export default function AdminPage() {
           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
             Total Users
           </p>
-          <p className="mt-1 text-2xl font-bold text-ink">{users.length}</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">{users.length}</p>
         </Card>
         <Card>
           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
@@ -93,7 +93,7 @@ export default function AdminPage() {
         ) : users.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-14 text-center">
             <ShieldIcon className="h-8 w-8 text-slate-300" />
-            <p className="font-medium text-ink">No users to show</p>
+            <p className="font-medium text-slate-900">No users to show</p>
             <p className="max-w-xs text-sm text-slate-500">
               Connect this page to your user service to see registered
               accounts here.
@@ -114,7 +114,7 @@ export default function AdminPage() {
               <tbody className="divide-y divide-slate-100">
                 {users.map((u) => (
                   <tr key={u.id} className="transition-colors hover:bg-slate-50">
-                    <td className="px-5 py-3.5 font-medium text-ink">{u.name}</td>
+                    <td className="px-5 py-3.5 font-medium text-slate-900">{u.name}</td>
                     <td className="px-5 py-3.5 text-slate-500">{u.email}</td>
                     <td className="px-5 py-3.5">
                       <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700">

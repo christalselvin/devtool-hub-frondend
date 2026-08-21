@@ -45,13 +45,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-bg px-4 py-10 sm:px-6">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10 sm:px-6">
       <div className="w-full max-w-lg">
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-700 font-mono text-lg font-bold text-white">
             {"</>"}
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             Create your account
           </h1>
           <p className="text-sm text-slate-500">

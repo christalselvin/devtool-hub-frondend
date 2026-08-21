@@ -76,7 +76,7 @@ export default function PasswordPage() {
           {options.map(({ label, checked, set }) => (
             <label
               key={label}
-              className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 text-sm text-ink transition-colors hover:bg-slate-50"
+              className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-900 transition-colors hover:bg-slate-50"
             >
               <input
                 type="checkbox"

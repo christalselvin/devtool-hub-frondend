@@ -4,6 +4,7 @@ import PublicNavbar from "../components/layout/Navbar";
 import HeroSection from "../components/home/HeroSection";
 import PopularToolsSection from "../components/home/PopularToolsSection";
 import HomeCtaSection from "../components/home/HomeCtaSection";
+import Footer from "../components/layout/Footer";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,8 @@ export default function HomePage() {
         <PopularToolsSection />
         <AdSenseSlot />
         <HomeCtaSection />
+        <Footer />
+
       </main>
     </div>
   );

@@ -80,7 +80,7 @@ export default function HistoryPage() {
       {history.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-14 text-center">
           <HistoryIcon className="h-8 w-8 text-slate-300" />
-          <p className="font-medium text-ink">No history yet</p>
+          <p className="font-medium text-slate-900">No history yet</p>
           <p className="text-sm text-slate-500">
             Tools you use will show up here.
           </p>
@@ -93,7 +93,7 @@ export default function HistoryPage() {
               className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:p-5"
             >
               <div className="min-w-0">
-                <p className="truncate font-semibold text-ink">
+                <p className="truncate font-semibold text-slate-900">
                   {item.tool_name}
                 </p>
                 <p className="text-sm text-slate-500">{item.created_at}</p>

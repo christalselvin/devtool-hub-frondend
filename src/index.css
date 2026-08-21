@@ -1,15 +1,5 @@
 @import "tailwindcss";
 
-/* ==============================
-   Global Reset
-============================== */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
   background: #ffffff;
@@ -25,8 +15,6 @@ body,
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background: #ffffff;
-  color: #111827;
   font-family:
     Inter,
     ui-sans-serif,
@@ -37,40 +25,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-/* ==============================
-   Form Elements
-============================== */
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-}
-
-/* ==============================
-   Links & Media
-============================== */
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
 }
 
 /* ==============================

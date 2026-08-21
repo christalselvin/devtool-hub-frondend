@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 
 export default function NotFoundPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-bg px-6 text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-6 text-center">
       <span className="font-mono text-sm font-medium text-indigo-700">
         error/404
       </span>
-      <h1 className="mt-3 text-6xl font-bold tracking-tight text-ink sm:text-7xl">
+      <h1 className="mt-3 text-6xl font-bold tracking-tight text-slate-900 sm:text-7xl">
         404
       </h1>
       <p className="mt-3 max-w-sm text-slate-500">
