@@ -1,533 +1,104 @@
-import { Link } from "react-router-dom";
-import { Menu, Search, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import Button from "../ui/Button";
+import { LogOut, Search, UserRound } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 
-const NAV_ITEMS = [
-  { label: "Tools", path: "/tools" },
-  { label: "Categories", path: "/tools" },
-  { label: "About", path: "/tools" },
-  { label: "Contact", path: "/tools" },
-];
+export default function Navbar() {
+  const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
 
-const SOCIALS = [
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        className="h-[18px] w-[18px] fill-none stroke-current stroke-[1.8]"
-      >
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle
-          cx="17.5"
-          cy="6.5"
-          r="1"
-          className="fill-current stroke-none"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/",
-    icon: (
-      <span
-        aria-hidden="true"
-        className="text-[19px] font-black leading-none"
-      >
-        f
-      </span>
-    ),
-  },
-  {
-    label: "X",
-    href: "https://x.com/",
-    icon: (
-      <span
-        aria-hidden="true"
-        className="text-[18px] font-medium leading-none"
-      >
-        𝕏
-      </span>
-    ),
-  },
-  {
-    label: "Reddit",
-    href: "https://www.reddit.com/",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        className="h-[19px] w-[19px] fill-current"
-      >
-        <circle cx="12" cy="12" r="9" />
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
-        <circle
-          cx="9"
-          cy="12"
-          r="1.25"
-          className="fill-white"
-        />
+  const displayName = user
+    ? [user.first_name, user.last_name].filter(Boolean).join(" ") || user.username || user.email
+    : "Developer";
 
-        <circle
-          cx="15"
-          cy="12"
-          r="1.25"
-          className="fill-white"
-        />
-
-        <path
-          d="M8.5 15.1c1.8 1.7 5.2 1.7 7 0"
-          className="fill-none stroke-white stroke-[1.4]"
-        />
-
-        <path
-          d="M14.2 5.8l1-2.5 2.3.5"
-          className="fill-none stroke-current stroke-[1.2]"
-        />
-
-        <circle
-          cx="17.7"
-          cy="3.8"
-          r="1"
-          className="fill-current"
-        />
-      </svg>
-    ),
-  },
-];
-
-export default function PublicNavbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [logoError, setLogoError] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        headerRef.current &&
-        !headerRef.current.contains(event.target as Node)
-      ) {
-        setMobileOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [mobileOpen]);
+  const initials = displayName
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part: string) => part[0] ?? "")
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "D";
 
   return (
-    <header
-      ref={headerRef}
-      className="
-        sticky
-        top-0
-        z-50
-        border-b
-        border-slate-200
-        bg-white/95
-        shadow-[0_1px_0_rgba(15,23,42,0.03)]
-        backdrop-blur-xl
-      "
-    >
-      <div
-        className="
-          mx-auto
-          flex
-          min-h-[80px]
-          w-full
-          max-w-[1440px]
-          items-center
-          justify-between
-          px-4
-          sm:px-6
-          lg:px-8
-        "
-      >
-        {/* =========================
-            LOGO → HOME
-        ========================== */}
-        <Link
-          to="/"
-          onClick={() => setMobileOpen(false)}
-          className="group flex shrink-0 items-center gap-3"
-          aria-label="DevTools Hub home"
+    <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur-xl">
+      <div className="mx-auto flex min-h-16 w-full max-w-screen-2xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <NavLink
+          to="/dashboard"
+          className="group flex min-w-0 items-center gap-3"
+          aria-label="DevTools Hub dashboard"
         >
-          {!logoError ? (
-            <img
-              src="/logo.svg"
-              alt="DevTools Hub"
-              className="
-                h-11
-                w-auto
-                transition-transform
-                duration-200
-                group-hover:scale-105
-                sm:h-12
-              "
-              onError={() => setLogoError(true)}
-            />
-          ) : (
-            <span
-              className="
-                flex
-                h-11
-                w-11
-                items-center
-                justify-center
-                rounded-full
-                bg-orange-500
-                font-mono
-                text-sm
-                font-black
-                text-white
-                sm:h-12
-                sm:w-12
-              "
-            >
-              &lt;/&gt;
-            </span>
-          )}
-        </Link>
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-sm font-black text-white shadow-[0_8px_20px_rgba(249,115,22,0.2)] transition-transform duration-200 group-hover:-translate-y-0.5">
+            DT
+          </span>
 
-        {/* =========================
-            DESKTOP NAVIGATION
-        ========================== */}
-        <nav
-          className="
-            hidden
-            items-center
-            gap-8
-            lg:flex
-          "
-          aria-label="Main navigation"
-        >
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className="
-                rounded-lg
-                px-3
-                py-2.5
-                text-sm
-                font-semibold
-                text-slate-800
-                transition-colors
-                duration-200
-                hover:bg-orange-50
-                hover:text-orange-600
-              "
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+          <span className="text-lg font-extrabold tracking-tight text-slate-950 sm:text-xl">
+            Dev<span className="text-orange-500">Tools</span>Hub
+          </span>
+        </NavLink>
 
-        {/* =========================
-            RIGHT SIDE
-            SOCIAL → SEARCH → LOGIN → GET STARTED
-        ========================== */}
-        <div
-          className="
-            mr-32
-            hidden
-            items-center
-            gap-4
-            lg:flex
-          "
-        >
-          {/* Social media */}
-          <div className="flex items-center gap-1.5">
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={social.label}
-                className="
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-lg
-                  text-slate-600
-                  transition-colors
-                  duration-200
-                  hover:bg-orange-50
-                  hover:text-orange-600
-                "
-              >
-                {social.icon}
-              </a>
-            ))}
-          </div>
-
-          {/* Search */}
+        <div className="hidden max-w-xl flex-1 md:block">
           <button
             type="button"
-            aria-label="Search"
-            className="
-              flex
-              h-11
-              w-11
-              items-center
-              justify-center
-              rounded-lg
-              border
-              border-slate-200
-              bg-white
-              text-slate-700
-              transition-colors
-              duration-200
-              hover:border-orange-300
-              hover:bg-orange-50
-              hover:text-orange-600
-              focus:outline-none
-              focus-visible:ring-4
-              focus-visible:ring-orange-500/15
-            "
+            onClick={() => navigate("/search")}
+            className="group flex h-11 w-full items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 text-left text-sm text-slate-500 transition-all duration-200 hover:border-orange-300 hover:bg-orange-50/40 hover:text-slate-700 focus:outline-none focus:ring-4 focus:ring-orange-500/10"
           >
-            <Search size={19} />
+            <Search size={17} className="shrink-0 text-slate-400 transition-colors group-hover:text-orange-500" />
+            <span className="flex-1">Search developer tools...</span>
+            <kbd className="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 lg:inline-block">
+              /
+            </kbd>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => navigate("/profile")}
+            aria-label="Open profile"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-500/10 sm:hidden"
+          >
+            <UserRound size={18} />
           </button>
 
-          {/* Login + Get started */}
-          <div className="flex items-center gap-2.5">
-            <Link
-              to="/login"
-              className="
-                flex
-                h-11
-                items-center
-                rounded-lg
-                px-3.5
-                text-sm
-                font-semibold
-                text-slate-800
-                transition-colors
-                duration-200
-                hover:bg-slate-50
-                hover:text-orange-600
-              "
-            >
-              Login
-            </Link>
+          <button
+            type="button"
+            onClick={() => navigate("/profile")}
+            className="hidden items-center gap-2 rounded-xl px-2 py-1.5 text-left transition-colors hover:bg-orange-50/70 sm:flex"
+          >
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-700">
+              {initials}
+            </span>
+            <span className="hidden max-w-40 truncate text-sm font-semibold text-slate-900 lg:block">
+              {displayName}
+            </span>
+          </button>
 
-            <Button
-              to="/register"
-              className="
-                h-11
-                rounded-xl
-                bg-orange-500
-                px-6
-                text-sm
-                font-bold
-                text-white
-                shadow-[0_5px_14px_rgba(249,115,22,0.2)]
-                transition-all
-                duration-200
-                hover:bg-orange-600
-                hover:shadow-[0_8px_18px_rgba(249,115,22,0.26)]
-              "
-            >
-              Get started
-            </Button>
-          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-500/10"
+          >
+            <LogOut size={17} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
         </div>
-
-        {/* =========================
-            MOBILE TOGGLE
-        ========================== */}
-        <button
-          type="button"
-          aria-label={
-            mobileOpen ? "Close menu" : "Open menu"
-          }
-          aria-expanded={mobileOpen}
-          onClick={() =>
-            setMobileOpen((value) => !value)
-          }
-          className="
-            flex
-            h-10
-            w-10
-            items-center
-            justify-center
-            rounded-xl
-            border
-            border-slate-200
-            bg-white
-            text-slate-700
-            transition-colors
-            duration-200
-            hover:border-orange-300
-            hover:bg-orange-50
-            hover:text-orange-600
-            lg:hidden
-          "
-        >
-          {mobileOpen ? (
-            <X size={20} />
-          ) : (
-            <Menu size={20} />
-          )}
-        </button>
       </div>
 
-      {/* =========================
-          MOBILE MENU
-      ========================== */}
-      {mobileOpen && (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
-          <nav
-            className="
-              mx-auto
-              flex
-              max-w-[640px]
-              flex-col
-              px-5
-              py-6
-              sm:px-8
-              sm:py-7
-            "
-            aria-label="Mobile navigation"
-          >
-            {/* Navigation */}
-            <div className="flex flex-col gap-0.5">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setMobileOpen(false)}
-                  className="
-                    rounded-xl
-                    px-4
-                    py-3.5
-                    text-base
-                    font-semibold
-                    text-slate-800
-                    transition-colors
-                    duration-200
-                    hover:bg-orange-50
-                    hover:text-orange-600
-                  "
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="my-6 border-t border-slate-100" />
-
-            {/* Social */}
-            <div>
-              <p
-                className="
-                  mb-3
-                  px-1
-                  text-[11px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.14em]
-                  text-slate-400
-                "
-              >
-                Follow us
-              </p>
-
-              <div className="flex items-center gap-2.5">
-                {SOCIALS.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                    className="
-                      flex
-                      h-11
-                      w-11
-                      items-center
-                      justify-center
-                      rounded-xl
-                      border
-                      border-slate-200
-                      text-slate-600
-                      transition-colors
-                      duration-200
-                      hover:border-orange-300
-                      hover:bg-orange-50
-                      hover:text-orange-600
-                    "
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="my-6 border-t border-slate-100" />
-
-            {/* Mobile actions */}
-            <div className="flex flex-col gap-3">
-              {/* Get started → Register */}
-              <Button
-                to="/register"
-                fullWidth
-                onClick={() => setMobileOpen(false)}
-                className="
-                  h-12
-                  rounded-xl
-                  bg-orange-500
-                  text-sm
-                  font-bold
-                  text-white
-                  shadow-[0_5px_14px_rgba(249,115,22,0.2)]
-                  hover:bg-orange-600
-                "
-              >
-                Get started
-              </Button>
-
-              {/* Login */}
-              <Link
-                to="/login"
-                onClick={() => setMobileOpen(false)}
-                className="
-                  inline-flex
-                  h-12
-                  w-full
-                  items-center
-                  justify-center
-                  rounded-xl
-                  border
-                  border-slate-200
-                  text-sm
-                  font-semibold
-                  text-slate-800
-                  transition-colors
-                  duration-200
-                  hover:border-orange-300
-                  hover:bg-orange-50
-                "
-              >
-                Login
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
+      <div className="border-t border-slate-100 px-4 py-2.5 md:hidden">
+        <button
+          type="button"
+          onClick={() => navigate("/search")}
+          className="flex h-10 w-full items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3.5 text-sm text-slate-500 transition-colors hover:border-orange-300 hover:bg-orange-50/40 focus:outline-none focus:ring-4 focus:ring-orange-500/10"
+        >
+          <Search size={17} className="text-slate-400" />
+          <span>Search developer tools...</span>
+        </button>
+      </div>
     </header>
   );
 }
