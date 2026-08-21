@@ -4,9 +4,9 @@ import type { User } from "../types/user";
 interface AuthState {
   token: string | null;
   user: User | null;
-
   setToken: (token: string) => void;
   setUser: (user: User) => void;
+  updateUser: (updates: Partial<User>) => void;
   logout: () => void;
 }
 
@@ -16,21 +16,21 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setToken: (token) => {
     localStorage.setItem("token", token);
-
-    set({
-      token,
-    });
+    set({ token });
   },
 
   setUser: (user) => {
-    set({
-      user,
-    });
+    set({ user });
+  },
+
+  updateUser: (updates) => {
+    set((state) => ({
+      user: state.user ? { ...state.user, ...updates } : null,
+    }));
   },
 
   logout: () => {
     localStorage.removeItem("token");
-
     set({
       token: null,
       user: null,

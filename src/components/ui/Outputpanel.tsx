@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Copy } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface OutputPanelProps {
@@ -22,8 +23,13 @@ export default function OutputPanel({
 }: OutputPanelProps) {
   const copy = async () => {
     if (!value) return;
-    await navigator.clipboard.writeText(value);
-    toast.success("Copied to clipboard");
+
+    try {
+      await navigator.clipboard.writeText(value);
+      toast.success("Output copied");
+    } catch {
+      toast.error("Copy failed. Select the output and copy it manually.");
+    }
   };
 
   return (
@@ -56,9 +62,11 @@ export default function OutputPanel({
               type="button"
               onClick={copy}
               disabled={!value}
-              className="rounded-lg border border-slate-700 bg-slate-800/80 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-slate-600 hover:bg-slate-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label={`Copy ${label.toLowerCase()}`}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-slate-600 hover:bg-slate-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
             >
-              Copy
+              <Copy className="h-3.5 w-3.5" />
+              Copy output
             </button>
           )}
         </div>

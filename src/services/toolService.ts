@@ -1,7 +1,8 @@
 import api from "../api/axios";
+import { API_ENDPOINTS } from "../constants/api";
 
 export const formatJson = async (json: string) => {
-  const response = await api.post("/tools/json/format", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.JSON.FORMAT, {
     json,
   });
 
@@ -9,7 +10,7 @@ export const formatJson = async (json: string) => {
 };
 
 export const minifyJson = async (json: string) => {
-  const response = await api.post("/tools/json/minify", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.JSON.MINIFY, {
     json,
   });
 
@@ -17,7 +18,7 @@ export const minifyJson = async (json: string) => {
 };
 
 export const validateJson = async (json: string) => {
-  const response = await api.post("/tools/json/validate", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.JSON.VALIDATE, {
     json,
   });
 
@@ -26,7 +27,7 @@ export const validateJson = async (json: string) => {
 
 export const encodeBase64 = async (text: string) => {
   const response = await api.post(
-    "/tools/base64/encode",
+    API_ENDPOINTS.TOOLS.BASE64.ENCODE,
     {
       text,
     }
@@ -37,7 +38,7 @@ export const encodeBase64 = async (text: string) => {
 
 export const decodeBase64 = async (text: string) => {
   const response = await api.post(
-    "/tools/base64/decode",
+    API_ENDPOINTS.TOOLS.BASE64.DECODE,
     {
       text,
     }
@@ -47,7 +48,7 @@ export const decodeBase64 = async (text: string) => {
 };
 
 export const decodeJwt = async (token: string) => {
-  const response = await api.post("/tools/jwt/decode", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.JWT.DECODE, {
     token,
   });
 
@@ -55,7 +56,7 @@ export const decodeJwt = async (token: string) => {
 };
 
 export const verifyJwt = async (token: string) => {
-  const response = await api.post("/tools/jwt/verify", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.JWT.VERIFY, {
     token,
   });
 
@@ -63,12 +64,12 @@ export const verifyJwt = async (token: string) => {
 };
 
 export const generateUuidV1 = async () => {
-  const response = await api.get("/tools/uuid/v1");
+  const response = await api.get(API_ENDPOINTS.TOOLS.UUID.V1);
   return response.data;
 };
 
 export const generateUuidV4 = async () => {
-  const response = await api.get("/tools/uuid/v4");
+  const response = await api.get(API_ENDPOINTS.TOOLS.UUID.V4);
   return response.data;
 };
 
@@ -80,7 +81,7 @@ export const generatePassword = async (
   symbols: boolean
 ) => {
   const response = await api.post(
-    "/tools/password/generate",
+    API_ENDPOINTS.TOOLS.PASSWORD.GENERATE,
     {
       length,
       uppercase,
@@ -94,7 +95,7 @@ export const generatePassword = async (
 };
 
 export const generateMd5 = async (text: string) => {
-  const response = await api.post("/tools/hash/md5", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.HASH.MD5, {
     text,
   });
 
@@ -102,7 +103,7 @@ export const generateMd5 = async (text: string) => {
 };
 
 export const generateSha1 = async (text: string) => {
-  const response = await api.post("/tools/hash/sha1", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.HASH.SHA1, {
     text,
   });
 
@@ -110,7 +111,7 @@ export const generateSha1 = async (text: string) => {
 };
 
 export const generateSha256 = async (text: string) => {
-  const response = await api.post("/tools/hash/sha256", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.HASH.SHA256, {
     text,
   });
 
@@ -118,7 +119,7 @@ export const generateSha256 = async (text: string) => {
 };
 
 export const generateSha512 = async (text: string) => {
-  const response = await api.post("/tools/hash/sha512", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.HASH.SHA512, {
     text,
   });
 
@@ -126,7 +127,7 @@ export const generateSha512 = async (text: string) => {
 };
 
 export const encodeUrl = async (text: string) => {
-  const response = await api.post("/tools/url/encode", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.URL.ENCODE, {
     text,
   });
 
@@ -134,7 +135,7 @@ export const encodeUrl = async (text: string) => {
 };
 
 export const decodeUrl = async (text: string) => {
-  const response = await api.post("/tools/url/decode", {
+  const response = await api.post(API_ENDPOINTS.TOOLS.URL.DECODE, {
     text,
   });
 
@@ -143,7 +144,7 @@ export const decodeUrl = async (text: string) => {
 
 export const toUnixTimestamp = async (date: string) => {
   const response = await api.post(
-    "/tools/timestamp/to-unix",
+    API_ENDPOINTS.TOOLS.TIMESTAMP.TO_UNIX,
     {
       date,
     }
@@ -156,7 +157,7 @@ export const fromUnixTimestamp = async (
   timestamp: number
 ) => {
   const response = await api.post(
-    "/tools/timestamp/from-unix",
+    API_ENDPOINTS.TOOLS.TIMESTAMP.FROM_UNIX,
     {
       timestamp,
     }
@@ -167,7 +168,7 @@ export const fromUnixTimestamp = async (
 
 export const generateQr = async (text: string) => {
   const response = await api.post(
-    "/tools/qr/generate",
+    API_ENDPOINTS.TOOLS.QR.GENERATE,
     {
       text,
     }
@@ -181,7 +182,7 @@ export const testRegex = async (
   text: string
 ) => {
   const response = await api.post(
-    "/tools/regex/test",
+    API_ENDPOINTS.TOOLS.REGEX.TEST,
     {
       pattern,
       text,
@@ -192,17 +193,17 @@ export const testRegex = async (
 };
 
 export const getHistory = async () => {
-  const response = await api.get("/history/");
+  const response = await api.get(`${API_ENDPOINTS.TOOLS.HISTORY.LIST}/`);
   return response.data;
 };
 
 export const deleteHistory = async (id: string) => {
-  const response = await api.delete(`/history/${id}`);
+  const response = await api.delete(`${API_ENDPOINTS.TOOLS.HISTORY.DELETE}/${id}`);
 
   return response.data;
 };
 
 export const clearHistory = async () => {
-  const response = await api.delete("/history/");
+  const response = await api.delete(`${API_ENDPOINTS.TOOLS.HISTORY.CLEAR}/`);
   return response.data;
 };

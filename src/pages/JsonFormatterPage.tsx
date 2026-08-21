@@ -16,7 +16,7 @@ export default function JsonFormatterPage() {
   const handleFormat = async () => {
     try {
       const res = await formatJson(input);
-      setOutput(res.data);
+      setOutput(typeof res.data === "string" ? res.data : JSON.stringify(res.data, null, 2));
       toast.success("Formatted successfully");
     } catch {
       toast.error("Invalid JSON");
@@ -26,7 +26,7 @@ export default function JsonFormatterPage() {
   const handleMinify = async () => {
     try {
       const res = await minifyJson(input);
-      setOutput(res.data);
+      setOutput(typeof res.data === "string" ? res.data : JSON.stringify(res.data));
       toast.success("Minified");
     } catch {
       toast.error("Invalid JSON");

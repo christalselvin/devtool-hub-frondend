@@ -6,7 +6,6 @@ import RegisterPage from "../pages/RegisterPage";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import MainLayout from "../layouts/MainLayout";
-import PublicToolLayout from "../layouts/PublicToolLayout";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import AuthLayout from "../layouts/AuthLayout";
 import JsonFormatterPage from "../pages/JsonFormatterPage";
@@ -42,7 +41,8 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        <Route element={<PublicToolLayout />}>
+        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tools/json" element={<JsonFormatterPage />} />
           <Route path="/tools/base64" element={<Base64Page />} />
           <Route path="/tools/jwt" element={<JwtPage />} />
@@ -53,10 +53,6 @@ export default function AppRoutes() {
           <Route path="/tools/timestamp" element={<TimestampPage />} />
           <Route path="/tools/qr" element={<QrCodePage />} />
           <Route path="/tools/regex" element={<RegexPage />} />
-        </Route>
-
-        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
-          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/billing" element={<BillingPage />} />

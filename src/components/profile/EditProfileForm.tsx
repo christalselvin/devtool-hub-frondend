@@ -13,7 +13,7 @@ export default function EditProfileForm({
   const [form, setForm] = useState({
     first_name: user.first_name,
     last_name: user.last_name || "",
-    phone: user.phone || "",
+    username: user.username || "",
   });
 
   const submit = async () => {
@@ -61,15 +61,15 @@ export default function EditProfileForm({
       />
 
       <input
-        value={form.phone}
+        value={form.username}
         onChange={(e) =>
           setForm({
             ...form,
-            phone: e.target.value,
+            username: e.target.value,
           })
         }
         className="w-full rounded border p-3"
-        placeholder="Phone"
+        placeholder="Username"
       />
 
       <button

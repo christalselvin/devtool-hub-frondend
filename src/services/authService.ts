@@ -53,6 +53,49 @@ export const getProfile = async (): Promise<{
 };
 
 /**
+ * Update Profile
+ */
+export interface UpdateProfileData {
+  first_name: string;
+  last_name?: string;
+  username: string;
+}
+
+export const updateProfile = async (
+  data: UpdateProfileData
+): Promise<{
+  success: boolean;
+  message: string;
+  data: User;
+}> => {
+  const response = await api.put<{
+    success: boolean;
+    message: string;
+    data: User;
+  }>(API_ENDPOINTS.USERS.PROFILE, data);
+
+  return response.data;
+};
+
+/**
+ * Change Password
+ */
+export const changePassword = async (
+  oldPassword: string,
+  newPassword: string
+) => {
+  const response = await api.patch(
+    API_ENDPOINTS.USERS.CHANGE_PASSWORD,
+    {
+      current_password: oldPassword,
+      new_password: newPassword,
+    }
+  );
+
+  return response.data;
+};
+
+/**
  * Refresh Access Token
  */
 export const refreshToken = async () => {
@@ -69,30 +112,6 @@ export const refreshToken = async () => {
 export const logout = async () => {
   const response = await api.post(
     API_ENDPOINTS.AUTH.LOGOUT
-  );
-
-  return response.data;
-};
-
-export const updateProfile = async (data: any) => {
-  const response = await api.put(
-    "/users/profile",
-    data
-  );
-
-  return response.data;
-};
-
-export const changePassword = async (
-  oldPassword: string,
-  newPassword: string
-) => {
-  const response = await api.patch(
-    "/users/change-password",
-    {
-      current_password: oldPassword,
-      new_password: newPassword,
-    }
   );
 
   return response.data;

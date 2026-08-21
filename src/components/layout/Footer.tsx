@@ -24,13 +24,14 @@ export default function Footer() {
             <Link
               to="/"
               aria-label="DevTools Hub home"
-              className="inline-flex items-center transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-3 transition-opacity hover:opacity-80"
             >
-              <img
-                src="/logo.svg"
-                alt="DevTools Hub"
-                className="h-11 w-auto"
-              />
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500 text-sm font-black text-white shadow-lg shadow-orange-500/20">
+                &lt;/&gt;
+              </span>
+              <span className="text-[15px] font-black tracking-tight text-slate-950">
+                DevTools Hub
+              </span>
             </Link>
 
             <p className="mt-4 max-w-xs text-sm leading-6 text-slate-500">

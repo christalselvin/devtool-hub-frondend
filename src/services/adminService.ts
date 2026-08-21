@@ -1,4 +1,5 @@
 import api from "../api/axios";
+import { API_ENDPOINTS } from "../constants/api";
 import type {
   DashboardStats,
   AdminUser,
@@ -10,7 +11,7 @@ export const getDashboardStats = async (): Promise<{
   success: boolean;
   data: DashboardStats;
 }> => {
-  const res = await api.get("/admin/dashboard");
+  const res = await api.get(API_ENDPOINTS.ADMIN.DASHBOARD);
 
   return res.data;
 };
@@ -19,7 +20,7 @@ export const getUsers = async (): Promise<{
   success: boolean;
   data: AdminUser[];
 }> => {
-  const res = await api.get("/users/");
+  const res = await api.get(`${API_ENDPOINTS.ADMIN.USERS}/`);
 
   return res.data;
 };
@@ -28,7 +29,7 @@ export const getRoles = async (): Promise<{
   success: boolean;
   data: Role[];
 }> => {
-  const res = await api.get("/admin/roles");
+  const res = await api.get(API_ENDPOINTS.ADMIN.ROLES);
 
   return res.data;
 };
@@ -37,7 +38,7 @@ export const getPermissions = async (): Promise<{
   success: boolean;
   data: Permission[];
 }> => {
-  const res = await api.get("/admin/permissions");
+  const res = await api.get(API_ENDPOINTS.ADMIN.PERMISSIONS);
 
   return res.data;
 };

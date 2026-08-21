@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
+import ToolInstructions from "../components/tools/ToolInstructions";
 
 export default function MainLayout() {
   return (
@@ -14,6 +15,7 @@ export default function MainLayout() {
         <Navbar />
 
         <main className="flex-1 overflow-auto p-6">
+          <ToolInstructions />
           <Outlet />
         </main>
 
