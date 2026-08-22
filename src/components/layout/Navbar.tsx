@@ -3,16 +3,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
 const adminLinks = [
-  { name: "Admin", path: "/admin", icon: ShieldCheck },
-  { name: "Users", path: "/admin/users", icon: Users },
-  { name: "Roles", path: "/admin/roles", icon: UserCog },
-  { name: "Permissions", path: "/admin/permissions", icon: KeyRound },
+  { name: "Admin", path: "/admin", icon: ShieldCheck, permission: "view_dashboard" },
+  { name: "Users", path: "/admin/users", icon: Users, permission: "manage_users" },
+  { name: "Roles", path: "/admin/roles", icon: UserCog, permission: "manage_roles" },
+  { name: "Permissions", path: "/admin/permissions", icon: KeyRound, permission: "manage_permissions" },
 ];
 
 export default function Navbar() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const hasPermission = useAuthStore((state) => state.hasPermission);
+
+  const visibleAdminLinks = adminLinks.filter(({ permission }) => hasPermission(permission));
 
   const handleLogout = () => {
     logout();
@@ -48,7 +51,7 @@ export default function Navbar() {
         </div>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Administration navigation">
-          {adminLinks.map(({ name, path, icon: Icon }) => (
+          {visibleAdminLinks.map(({ name, path, icon: Icon }) => (
             <NavLink key={path} to={path} className={({ isActive }) => `group flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-semibold transition ${isActive ? "bg-orange-50 text-orange-600" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
               <Icon className="h-3.5 w-3.5" strokeWidth={2} />
               {name}
@@ -80,16 +83,18 @@ export default function Navbar() {
         </button>
       </div>
 
-      <div className="border-t border-slate-100 px-4 py-2 xl:hidden">
-        <nav className="flex items-center gap-1 overflow-x-auto" aria-label="Administration navigation">
-          {adminLinks.map(({ name, path, icon: Icon }) => (
-            <NavLink key={path} to={path} className={({ isActive }) => `flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold ${isActive ? "bg-orange-50 text-orange-600" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
-              <Icon className="h-3.5 w-3.5" />
-              {name}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
+      {visibleAdminLinks.length > 0 && (
+        <div className="border-t border-slate-100 px-4 py-2 xl:hidden">
+          <nav className="flex items-center gap-1 overflow-x-auto" aria-label="Administration navigation">
+            {visibleAdminLinks.map(({ name, path, icon: Icon }) => (
+              <NavLink key={path} to={path} className={({ isActive }) => `flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold ${isActive ? "bg-orange-50 text-orange-600" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
+                <Icon className="h-3.5 w-3.5" />
+                {name}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
