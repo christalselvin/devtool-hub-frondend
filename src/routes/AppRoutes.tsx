@@ -8,6 +8,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import MainLayout from "../layouts/MainLayout";
 import PublicToolLayout from "../layouts/PublicToolLayout";
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import PermissionRoute from "../components/common/PermissionRoute";
 import AuthLayout from "../layouts/AuthLayout";
 import JsonFormatterPage from "../pages/JsonFormatterPage";
 import Base64Page from "../pages/Base64Page";
@@ -60,15 +61,15 @@ export default function AppRoutes() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/billing" element={<BillingPage />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
-          <Route path="/admin/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
-          <Route path="/admin/audit-logs" element={<ProtectedRoute><AuditLogsPage /></ProtectedRoute>} />
+          <Route path="/admin" element={<PermissionRoute permission="view_dashboard"><AdminDashboardPage /></PermissionRoute>} />
+          <Route path="/admin/analytics" element={<PermissionRoute permission="view_dashboard"><AnalyticsPage /></PermissionRoute>} />
+          <Route path="/admin/audit-logs" element={<PermissionRoute permission="view_dashboard"><AuditLogsPage /></PermissionRoute>} />
         </Route>
 
-        <Route path="/admin/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
-        <Route path="/admin/roles" element={<ProtectedRoute><RolesPage /></ProtectedRoute>} />
-        <Route path="/admin/permissions" element={<ProtectedRoute><PermissionsPage /></ProtectedRoute>} />
-        <Route path="/admin/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<PermissionRoute permission="manage_users"><UsersPage /></PermissionRoute>} />
+        <Route path="/admin/roles" element={<PermissionRoute permission="manage_roles"><RolesPage /></PermissionRoute>} />
+        <Route path="/admin/permissions" element={<PermissionRoute permission="manage_permissions"><PermissionsPage /></PermissionRoute>} />
+        <Route path="/admin/settings" element={<PermissionRoute permission="manage_settings"><SettingsPage /></PermissionRoute>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
