@@ -64,12 +64,12 @@ export default function AppRoutes() {
           <Route path="/admin" element={<PermissionRoute permission="view_dashboard"><AdminDashboardPage /></PermissionRoute>} />
           <Route path="/admin/analytics" element={<PermissionRoute permission="view_dashboard"><AnalyticsPage /></PermissionRoute>} />
           <Route path="/admin/audit-logs" element={<PermissionRoute permission="view_dashboard"><AuditLogsPage /></PermissionRoute>} />
+          <Route path="/admin/users" element={<PermissionRoute permission="manage_users"><UsersPage /></PermissionRoute>} />
+          <Route path="/admin/roles" element={<PermissionRoute permission="manage_roles"><RolesPage /></PermissionRoute>} />
+          <Route path="/admin/permissions" element={<PermissionRoute permission="manage_permissions"><PermissionsPage /></PermissionRoute>} />
+          <Route path="/admin/settings" element={<PermissionRoute permission="manage_settings"><SettingsPage /></PermissionRoute>} />
         </Route>
 
-        <Route path="/admin/users" element={<PermissionRoute permission="manage_users"><UsersPage /></PermissionRoute>} />
-        <Route path="/admin/roles" element={<PermissionRoute permission="manage_roles"><RolesPage /></PermissionRoute>} />
-        <Route path="/admin/permissions" element={<PermissionRoute permission="manage_permissions"><PermissionsPage /></PermissionRoute>} />
-        <Route path="/admin/settings" element={<PermissionRoute permission="manage_settings"><SettingsPage /></PermissionRoute>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
