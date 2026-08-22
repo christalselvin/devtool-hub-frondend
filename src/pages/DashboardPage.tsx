@@ -3,9 +3,25 @@ import RecentHistory from "../components/dashboard/RecentHistory";
 import { Activity, ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import { useEffect, useState } from "react";
+import { getHistory } from "../services/historyService";
+import type { ToolHistory } from "../types/history";
 
 export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
+  const [history, setHistory] = useState<ToolHistory[]>([]);
+
+  useEffect(() => {
+    getHistory()
+      .then((data) => setHistory(Array.isArray(data) ? data : data?.data ?? []))
+      .catch(() => setHistory([]));
+  }, []);
+
+  const toolCounts = history.reduce<Record<string, number>>((counts, item) => {
+    counts[item.tool_name] = (counts[item.tool_name] ?? 0) + 1;
+    return counts;
+  }, {});
+  const mostUsedTool = Object.entries(toolCounts).sort(([, countA], [, countB]) => countB - countA)[0]?.[0] ?? "No tool runs yet";
 
   const username =
     user?.username ||
@@ -59,7 +75,7 @@ export default function DashboardPage() {
             <div className="max-w-2xl">
               <h1 className="text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-4xl lg:text-[40px]">
                 Welcome back,{" "}
-                <span className="text-orange-500">{username}</span>
+                <span className="text-purple-600">{username}</span>
                 <span className="text-slate-950">🤞</span>
               </h1>
 
@@ -133,9 +149,9 @@ export default function DashboardPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-7 sm:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <StatsCard title="Developer Tools" value={10} />
-            <StatsCard title="Tool Runs" value={0} />
+            <StatsCard title="Tool Runs" value={history.length} accent="purple" />
             <StatsCard title="Account" value="Active" />
           </div>
         </section>
@@ -179,7 +195,7 @@ export default function DashboardPage() {
               </p>
 
               <p className="mt-1 text-2xl font-black tracking-tight text-slate-950">
-                0
+                {history.length}
               </p>
 
               <p className="text-[11px] font-medium text-slate-400">
@@ -193,7 +209,7 @@ export default function DashboardPage() {
               </p>
 
               <p className="mt-1 truncate text-base font-black text-slate-950">
-                JSON Formatter
+                {mostUsedTool}
               </p>
 
               <p className="text-[11px] font-medium text-slate-400">

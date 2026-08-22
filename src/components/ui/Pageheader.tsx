@@ -16,7 +16,7 @@ export default function PageHeader({
   action,
 }: PageHeaderProps) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-start sm:justify-between sm:pt-3">
       <div className="flex items-start gap-3 sm:gap-4">
         {icon && (
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 sm:h-12 sm:w-12">
@@ -24,10 +24,10 @@ export default function PageHeader({
           </div>
         )}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-indigo-700">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-purple-600">
             {eyebrow}
           </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          <h1 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl">
             {title}
           </h1>
           {description && (

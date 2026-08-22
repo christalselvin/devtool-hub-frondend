@@ -8,6 +8,7 @@ import { login, getProfile } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
 import { Input, Label, FieldError } from "../components/ui/Field";
 import Button from "../components/ui/Button";
+import { isAdminUser } from "../utils/permissions";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -19,8 +20,6 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  const redirectTo = searchParams.get("redirect") || "/dashboard";
 
   const setToken = useAuthStore((state) => state.setToken);
   const setUser = useAuthStore((state) => state.setUser);
@@ -45,7 +44,10 @@ export default function LoginPage() {
 
       toast.success("Login successful!");
 
-      navigate(redirectTo);
+      navigate(
+        searchParams.get("redirect") ||
+          (isAdminUser(profile.data) ? "/admin" : "/dashboard")
+      );
     } catch (err) {
       console.error(err);
       toast.error("Invalid email or password");

@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Seo from "../components/seo/Seo";
-import PublicNavbar from "../components/layout/Navbar";
+import PublicNavbar from "../components/layout/PublicNavbar";
 import { homeTools } from "../data/homeTools";
 
 export default function ToolsPage() {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("search")?.trim().toLowerCase() ?? "";
+  const filteredTools = homeTools.filter(({ label }) => label.toLowerCase().includes(query));
+
   return (
     <div className="min-h-screen bg-white text-slate-950">
       <Seo path="/tools" />
@@ -19,7 +23,7 @@ export default function ToolsPage() {
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {homeTools.map(({ icon: Icon, label, path }) => (
+          {filteredTools.map(({ icon: Icon, label, path }) => (
             <Link
               key={label}
               to={path}
@@ -33,6 +37,9 @@ export default function ToolsPage() {
             </Link>
           ))}
         </div>
+        {filteredTools.length === 0 && (
+          <p className="mt-10 rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">No tools found for “{searchParams.get("search")}”.</p>
+        )}
       </main>
     </div>
   );

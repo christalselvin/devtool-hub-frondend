@@ -1,6 +1,6 @@
 import Seo from "../components/seo/Seo";
 import AdSenseSlot from "../components/monetization/AdSenseSlot";
-import PublicNavbar from "../components/layout/Navbar";
+import PublicNavbar from "../components/layout/PublicNavbar";
 import HeroSection from "../components/home/HeroSection";
 import PopularToolsSection from "../components/home/PopularToolsSection";
 import HomeCtaSection from "../components/home/HomeCtaSection";

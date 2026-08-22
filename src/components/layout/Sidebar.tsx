@@ -11,12 +11,10 @@ import {
   Clock3,
   QrCode,
   Regex,
-  LogOut,
   Wrench,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
-import { useAuthStore } from "../../store/authStore";
 
 type IconType = typeof Braces;
 
@@ -42,15 +40,18 @@ const tools: SidebarItem[] = [
 function SidebarLink({
   item,
   collapsed,
+  onClick,
 }: {
   item: SidebarItem;
   collapsed: boolean;
+  onClick?: () => void;
 }) {
   const Icon = item.icon;
 
   return (
     <NavLink
       to={item.path}
+      onClick={onClick}
       title={collapsed ? item.name : undefined}
       className={({ isActive }) =>
         `group relative mx-2 flex items-center rounded-xl py-2.5 text-[13px] font-semibold transition-all duration-200 ${
@@ -105,14 +106,21 @@ function SidebarLink({
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({
+  mobileOpen = false,
+  onClose,
+}: {
+  mobileOpen?: boolean;
+  onClose?: () => void;
+}) {
   const [collapsed, setCollapsed] = useState(false);
-  const logout = useAuthStore((state) => state.logout);
 
   return (
     <aside
-      className={`flex h-screen shrink-0 flex-col border-r border-slate-200 bg-white text-slate-900 transition-[width] duration-300 ease-in-out ${
-        collapsed ? "w-[72px]" : "w-64"
+      className={`fixed inset-y-0 left-0 z-50 flex w-64 shrink-0 flex-col border-r border-slate-200 bg-white text-slate-900 transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:translate-x-0 lg:transition-[width] ${
+        collapsed ? "lg:w-[72px]" : "lg:w-64"
+      } ${
+        mobileOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {/* Header */}
@@ -210,30 +218,10 @@ export default function Sidebar() {
               key={item.path}
               item={item}
               collapsed={collapsed}
+              onClick={onClose}
             />
           ))}
         </nav>
-      </div>
-
-      {/* Logout */}
-      <div className="border-t border-slate-100 bg-slate-50/60 p-3">
-        <button
-          type="button"
-          onClick={() => {
-            logout();
-            window.location.href = "/login";
-          }}
-          title={collapsed ? "Logout" : undefined}
-          className={`group flex w-full items-center rounded-xl border border-transparent py-2.5 text-sm font-bold text-slate-500 transition-all duration-200 hover:border-red-100 hover:bg-red-50 hover:text-red-600 ${
-            collapsed ? "justify-center px-2" : "gap-3 px-3"
-          }`}
-        >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-slate-400 shadow-sm transition-colors group-hover:bg-red-100 group-hover:text-red-600">
-            <LogOut className="h-4 w-4" />
-          </span>
-
-          {!collapsed && <span>Logout</span>}
-        </button>
       </div>
     </aside>
   );
